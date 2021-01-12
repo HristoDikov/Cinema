@@ -1,28 +1,27 @@
-﻿
-namespace Cinema.Server.Controllers
+﻿namespace Cinema.Server.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using Cinema.Server.Data.Models;
-    using Cinema.Server.Models.Identity;
+    using Data.Models;
+    using Models.Identity;
     using Microsoft.AspNetCore.Identity;
     using System.Threading.Tasks;
     using Microsoft.Extensions.Options;
-    using System.IdentityModel.Tokens.Jwt;
-    using System.Text;
-    using Microsoft.IdentityModel.Tokens;
-    using System.Security.Claims;
-    using System;
+    using Services.Contracts;
+    using global::Models.Identity;
 
     public class IdentityController : ApiController
     {
         private readonly UserManager<User> userManager;
+        private readonly IIdentityService identityService;
         private readonly ApplicationSettings appSettings;
 
         public IdentityController(
             UserManager<User> userManager,
-            IOptions<ApplicationSettings> appSettings)
+            IOptions<ApplicationSettings> appSettings, 
+            IIdentityService identityService)
         {
             this.userManager = userManager;
+            this.identityService = identityService;
             this.appSettings = appSettings.Value;
         }
 
@@ -46,7 +45,7 @@ namespace Cinema.Server.Controllers
         }
 
         [Route(nameof(Login))]
-        public async Task<ActionResult<string>> Login(LoginRequestModel model)
+        public async Task<ActionResult<LoginResponseModel>> Login(LoginRequestModel model)
         {
             var user = await this.userManager.FindByNameAsync(model.UserName);
 
@@ -62,21 +61,15 @@ namespace Cinema.Server.Controllers
                 return Unauthorized();
             }
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(this.appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim("id", user.Id.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var encryptedToken = tokenHandler.WriteToken(token);
+            string token = identityService.GenerateJwtToker(
+                user.Id, 
+                user.UserName, 
+                this.appSettings.Secret);
 
-            return encryptedToken;
+            return new LoginResponseModel
+            {
+                Token = token,
+            };
         }
     }
 }

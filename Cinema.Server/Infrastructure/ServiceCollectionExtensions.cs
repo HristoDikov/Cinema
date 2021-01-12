@@ -1,5 +1,7 @@
 ﻿namespace Cinema.Server.Infrastructure
 {
+    using Cinema.Server.Services;
+    using Cinema.Server.Services.Contracts;
     using Data;
     using Data.Models;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -52,5 +54,9 @@
 
             return services;
         }
+
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services) 
+         => services.AddTransient<IIdentityService, IdentityService>();
+        
     }
 }
