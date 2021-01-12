@@ -9,10 +9,20 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
+    using Microsoft.OpenApi.Models;
     using System.Text;
 
     public static class ServiceCollectionExtensions
     {
+        public static ApplicationSettings GetApplicationSettings(this IServiceCollection services, IConfiguration configuration)
+        {
+            var applicationSettingConfig = configuration.GetSection("ApplicationSettings");
+            services.Configure<ApplicationSettings>(applicationSettingConfig);
+
+            var appSettings = applicationSettingConfig.Get<ApplicationSettings>();
+
+            return appSettings;
+        }
 
         public static IServiceCollection AddIdentity(this IServiceCollection services)
         {
@@ -29,7 +39,7 @@
             return services;
         }
 
-        public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, ApplicationSettings appSettings) 
+        public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, ApplicationSettings appSettings)
         {
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
@@ -55,8 +65,20 @@
             return services;
         }
 
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services) 
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
          => services.AddTransient<IIdentityService, IdentityService>();
-        
+
+
+        public static IServiceCollection AddSwagger(this IServiceCollection services)
+            => services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc(
+                    "v1",
+                    new OpenApiInfo
+                    {
+                        Title = "My Cinema API",
+                        Version = "v1"
+                    });
+            });
     }
 }

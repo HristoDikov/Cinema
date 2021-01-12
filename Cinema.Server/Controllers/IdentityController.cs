@@ -7,7 +7,7 @@
     using System.Threading.Tasks;
     using Microsoft.Extensions.Options;
     using Services.Contracts;
-    using global::Models.Identity;
+    using Microsoft.AspNetCore.Http;
 
     public class IdentityController : ApiController
     {
@@ -25,7 +25,10 @@
             this.appSettings = appSettings.Value;
         }
 
+        [HttpPost]
         [Route(nameof(Register))]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Register(RegisterRequestModel model)
         {
             var user = new User
@@ -38,13 +41,16 @@
 
             if (result.Succeeded)
             {
-                return Ok();
+                return Created("/login", user.UserName);
             }
 
             return BadRequest(result.Errors);
         }
 
+        [HttpPost]
         [Route(nameof(Login))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
         public async Task<ActionResult<LoginResponseModel>> Login(LoginRequestModel model)
         {
             var user = await this.userManager.FindByNameAsync(model.UserName);
@@ -66,10 +72,10 @@
                 user.UserName, 
                 this.appSettings.Secret);
 
-            return new LoginResponseModel
+            return Accepted(new LoginResponseModel
             {
                 Token = token,
-            };
+            });
         }
     }
 }
