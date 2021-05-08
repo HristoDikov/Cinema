@@ -4,14 +4,16 @@ using Cinema.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cinema.Server.Data.Migrations
 {
     [DbContext(typeof(CinemaDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210508182931_Added Models")]
+    partial class AddedModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,9 +66,6 @@ namespace Cinema.Server.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AvailableSeats")
-                        .HasColumnType("int");
 
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
@@ -416,7 +415,7 @@ namespace Cinema.Server.Data.Migrations
             modelBuilder.Entity("Cinema.Server.Data.Models.Seat", b =>
                 {
                     b.HasOne("Cinema.Server.Data.Models.Projection", "Projection")
-                        .WithMany("Seats")
+                        .WithMany()
                         .HasForeignKey("ProjectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -489,11 +488,6 @@ namespace Cinema.Server.Data.Migrations
             modelBuilder.Entity("Cinema.Server.Data.Models.Movie", b =>
                 {
                     b.Navigation("Projections");
-                });
-
-            modelBuilder.Entity("Cinema.Server.Data.Models.Projection", b =>
-                {
-                    b.Navigation("Seats");
                 });
 
             modelBuilder.Entity("Cinema.Server.Data.Models.Room", b =>
