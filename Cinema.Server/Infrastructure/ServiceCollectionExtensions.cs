@@ -1,14 +1,17 @@
 ﻿namespace Cinema.Server.Infrastructure
 {
-    using Cinema.Server.Services;
     using Cinema.Server.Services.Contracts;
-    using Data;
+    using Domain.CinemaDomain.NewCinema;
+    using Domain.CinemaDomainContracts;
+    using Cinema.Server.Services;
     using Data.Models;
+    using Data;
+
     using Microsoft.AspNetCore.Authentication.JwtBearer;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.IdentityModel.Tokens;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.OpenApi.Models;
     using System.Text;
 
@@ -64,11 +67,15 @@
 
             return services;
         }
-
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
-         => services.AddTransient<IIdentityService, IdentityService>();
+        {
+            services.AddTransient<IIdentityService, IdentityService>();
+            services.AddTransient<ICinemaRepository, CinemaRepository>();
+            services.AddTransient<INewCinema, NewCinemaCreation>();
+            services.Decorate<INewCinema, NewCinemaUniqueValidation>();
 
-
+            return services;
+        }
         public static IServiceCollection AddSwagger(this IServiceCollection services)
             => services.AddSwaggerGen(c =>
             {

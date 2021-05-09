@@ -1,9 +1,10 @@
 ﻿namespace Cinema.Server.Data.Models
 {
     using Data.Models.Contracts;
+
     using System.Collections.Generic;
 
-    public class Cinema : ICinema
+    public class Cinema : ICinema, ICinemaCreation
     {
 
         public Cinema(string name, string address)
