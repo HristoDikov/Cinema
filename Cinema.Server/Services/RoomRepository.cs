@@ -1,7 +1,8 @@
 ﻿namespace Cinema.Server.Services
 {
-    using Data.ModelsContracts;
     using Data;
+    using Contracts;
+    using Data.ModelsContracts;
 
     using System.Threading.Tasks;
     using Cinema.Server.Data.Models;
