@@ -2,7 +2,7 @@
 {
     using CinemaDomainContracts.Models;
     using System.Threading.Tasks;
-    using Data.Models.Contracts;
+    using Data.ModelsContracts;
     using CinemaDomainContracts;
     using Services.Contracts;
     using Data.Models;

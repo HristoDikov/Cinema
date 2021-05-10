@@ -2,7 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;
-    using Data.Models.Contracts;
+    using Data.ModelsContracts;
     using System.Linq;
     using Data.Models;
     using Contracts;

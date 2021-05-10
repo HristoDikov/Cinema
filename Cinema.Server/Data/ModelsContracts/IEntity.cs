@@ -1,4 +1,4 @@
-﻿namespace Cinema.Server.Data.Models.Contracts
+﻿namespace Cinema.Server.Data.ModelsContracts
 {
 
     public interface IEntity

@@ -1,6 +1,6 @@
 ﻿namespace Cinema.Server.Data.Models
 {
-    using Data.Models.Contracts;
+    using Data.ModelsContracts;
 
     using System.Collections.Generic;
 

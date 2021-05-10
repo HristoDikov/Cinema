@@ -1,5 +1,7 @@
-﻿namespace Cinema.Server.Data.Models.Contracts
+﻿namespace Cinema.Server.Data.ModelsContracts
 {
+    using Models;
+
     public interface ISeat : IEntity
     {
         short RowNum { get; set; }

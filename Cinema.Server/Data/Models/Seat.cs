@@ -1,6 +1,6 @@
 ﻿namespace Cinema.Server.Data.Models
 {
-    using Models.Contracts;
+    using ModelsContracts;
 
     public class Seat : ISeat
     {

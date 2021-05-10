@@ -1,9 +1,10 @@
 ﻿namespace Cinema.Server.Data.Models
 {
-    using Models.Contracts;
-    using System;
-    using System.Collections.Generic;
+    using ModelsContracts;
+
     using System.ComponentModel.DataAnnotations;
+    using System.Collections.Generic;
+    using System;
 
     public class Projection : IProjection
     {

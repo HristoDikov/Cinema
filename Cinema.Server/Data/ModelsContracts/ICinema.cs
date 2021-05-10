@@ -1,5 +1,6 @@
-﻿namespace Cinema.Server.Data.Models.Contracts
+﻿namespace Cinema.Server.Data.ModelsContracts
 {
+    using Cinema.Server.Data.Models;
     using System.Collections.Generic;
 
     public interface ICinema : IEntity  

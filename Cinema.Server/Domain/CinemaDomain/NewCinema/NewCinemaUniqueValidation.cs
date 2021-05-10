@@ -1,7 +1,7 @@
 ﻿namespace Cinema.Server.Domain.CinemaDomain.NewCinema
 {
     using CinemaDomainContracts.Models;
-    using Data.Models.Contracts;
+    using Data.ModelsContracts;
     using CinemaDomainContracts;
     using Services.Contracts;
 
