@@ -3,7 +3,7 @@
     using Models;
     using System.Collections.Generic;
 
-    interface IMovie : IEntity
+    public interface IMovie : IEntity
     {
         string Name { get; set; }
 

@@ -3,7 +3,7 @@
     using ModelsContracts;
     using System.Collections.Generic;
 
-    public class Movie : IMovie
+    public class Movie : IMovie, IMovieCreation
     {
         public Movie(string name, short DurationMinutes)
         {
