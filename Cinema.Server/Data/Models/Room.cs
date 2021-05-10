@@ -3,7 +3,7 @@
     using ModelsContracts;
     using System.Collections.Generic;
 
-    public class Room : IRoom
+    public class Room : IRoom, IRoomCreation
     {
         public Room(int cinemaId, int number, short seatsPerRow, short rows)
         {

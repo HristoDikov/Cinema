@@ -27,6 +27,14 @@
 
             return newCinema.Id;
         }
+
+        public async Task<ICinema> GetById(int id)
+        {
+            return await db.Cinemas
+                .Where(c => c.Id == id)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<ICinema> GetByNameAndAddress(string name, string address)
         {
             return await db.Cinemas.Where(x => x.Name == name &&

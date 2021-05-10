@@ -8,5 +8,7 @@
         Task<int> Create(ICinemaCreation model);
 
         Task<ICinema> GetByNameAndAddress(string name, string address);
+
+        Task<ICinema> GetById(int id);
     }
 }

@@ -3,6 +3,7 @@
     using Cinema.Server.Services.Contracts;
     using Domain.CinemaDomain.NewCinema;
     using Domain.CinemaDomainContracts;
+    using Domain.CinemaDomain.NewRoom;
     using Cinema.Server.Services;
     using Data.Models;
     using Data;
@@ -71,8 +72,14 @@
         {
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<ICinemaRepository, CinemaRepository>();
+            services.AddTransient<IRoomRepository, RoomRepository>();
+
             services.AddTransient<INewCinema, NewCinemaCreation>();
             services.Decorate<INewCinema, NewCinemaUniqueValidation>();
+
+            services.AddTransient<INewRoom, NewRoomCreation>();
+            services.Decorate<INewRoom, NewRoomUniqueValidation>();
+            services.Decorate<INewRoom, NewRoomCinemaValidation>();
 
             return services;
         }
