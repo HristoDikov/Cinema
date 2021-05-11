@@ -11,18 +11,19 @@
     public class NewProjectionCreation : INewProjection
     {
         private readonly IProjectionRepository projectionsRepo;
+        private readonly INewProjection newProjection;
 
-        public NewProjectionCreation(IProjectionRepository projectionsRepo)
+        public NewProjectionCreation(IProjectionRepository projectionsRepo, INewProjection newProjection)
         {
             this.projectionsRepo = projectionsRepo;
+            this.newProjection = newProjection;
         }
 
         public async Task<NewProjectionSummary> New(IProjectionCreation projection)
         {
-            int newProjId = await projectionsRepo.Create(new Projection(projection.MovieId, projection.RoomId, projection.StartTime));
+            await projectionsRepo.Create(new Projection(projection.MovieId, projection.RoomId, projection.StartTime));
 
-            return new NewProjectionSummary(true, $"Projection with Id: '{newProjId}', with movieId: '{projection.MovieId}', with roomId: '{projection.RoomId}', " +
-                $"with starting time: '{projection.StartTime}' has been successfully created!");
+            return await this.newProjection.New(projection);
         }
     }
 }

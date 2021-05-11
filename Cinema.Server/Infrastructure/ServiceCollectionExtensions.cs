@@ -77,6 +77,7 @@
             services.AddTransient<IRoomRepository, RoomRepository>();
             services.AddTransient<IMovieRepository, MovieRepository>();
             services.AddTransient<IProjectionRepository, ProjectionRepository>();
+            services.AddTransient<ISeatRepository, SeatRepository>();
 
             services.AddTransient<INewCinema, NewCinemaCreation>();
             services.Decorate<INewCinema, NewCinemaUniqueValidation>();
@@ -88,7 +89,8 @@
             services.AddTransient<INewMovie, NewMovieCreation>();
             services.Decorate<INewMovie, NewMovieUniqueValidation>();
 
-            services.AddTransient<INewProjection, NewProjectionCreation>();
+            services.AddTransient<INewProjection, NewProjectionSeatCreation>();
+            services.Decorate<INewProjection, NewProjectionCreation>();
             services.Decorate<INewProjection, NewProjectionMovieValidation>();
             services.Decorate<INewProjection, NewProjectionRoomValidation>();
             services.Decorate<INewProjection, NewProjectionUniqueValidation>();
