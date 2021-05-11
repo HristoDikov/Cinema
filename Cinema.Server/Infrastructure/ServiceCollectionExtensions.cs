@@ -3,6 +3,7 @@
     using Cinema.Server.Services.Contracts;
     using Domain.CinemaDomain.NewCinema;
     using Domain.CinemaDomain.NewMovie;
+    using Domain.CinemaDomain.NewProjection;
     using Domain.CinemaDomainContracts;
     using Domain.CinemaDomain.NewRoom;
     using Cinema.Server.Services;
@@ -75,6 +76,7 @@
             services.AddTransient<ICinemaRepository, CinemaRepository>();
             services.AddTransient<IRoomRepository, RoomRepository>();
             services.AddTransient<IMovieRepository, MovieRepository>();
+            services.AddTransient<IProjectionRepository, ProjectionRepository>();
 
             services.AddTransient<INewCinema, NewCinemaCreation>();
             services.Decorate<INewCinema, NewCinemaUniqueValidation>();
@@ -85,6 +87,13 @@
 
             services.AddTransient<INewMovie, NewMovieCreation>();
             services.Decorate<INewMovie, NewMovieUniqueValidation>();
+
+            services.AddTransient<INewProjection, NewProjectionCreation>();
+            services.Decorate<INewProjection, NewProjectionMovieValidation>();
+            services.Decorate<INewProjection, NewProjectionRoomValidation>();
+            services.Decorate<INewProjection, NewProjectionUniqueValidation>();
+            services.Decorate<INewProjection, NewProjectionPreviousOverlapValidation>();
+            services.Decorate<INewProjection, NewProjectionNextOverlapValidation>();
 
             return services;
         }

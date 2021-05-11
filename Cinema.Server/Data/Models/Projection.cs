@@ -6,7 +6,7 @@
     using System.Collections.Generic;
     using System;
 
-    public class Projection : IProjection
+    public class Projection : IProjection, IProjectionCreation
     {
         public Projection(int roomId, int movieId, DateTime startTime)
         {

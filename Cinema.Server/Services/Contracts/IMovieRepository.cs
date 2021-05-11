@@ -9,5 +9,7 @@
         Task<int> Create(IMovieCreation movie);
 
         Task<IMovie> GetByNameAndDuration(string name, short duration);
+
+        Task<IMovie> GetById(int movieId);
     }
 }

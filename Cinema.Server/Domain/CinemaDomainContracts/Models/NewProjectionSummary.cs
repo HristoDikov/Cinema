@@ -1,20 +1,15 @@
 ﻿namespace Cinema.Server.Domain.CinemaDomainContracts.Models
 {
-    public class NewProjectionSummary
+    public class NewProjectionSummary : NewSummary
     {
-        public NewProjectionSummary(bool isCreated)
+        public NewProjectionSummary(bool isCreated, string msg) 
+            : base(isCreated, msg)
         {
-            this.IsCreated = isCreated;
         }
 
-        public NewProjectionSummary(bool status, string msg)
-            : this(status)
+        public NewProjectionSummary(bool isCreated, string msg, int id) 
+            : base(isCreated, msg, id)
         {
-            this.Message = msg;
         }
-
-        public string Message { get; set; }
-
-        public bool IsCreated { get; set; }
     }
 }

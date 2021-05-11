@@ -21,7 +21,7 @@
         {
             Room newRoom = new Room(room.CinemaId, room.Number, room.SeatsPerRow, room.Rows);
 
-            db.Rooms.Add(newRoom);
+            this.db.Rooms.Add(newRoom);
             await this.db.SaveChangesAsync();
 
             return newRoom.Id;
@@ -29,8 +29,14 @@
 
         public async Task<IRoom> GetByCinemaAndNumber(int cinemaId, int number)
         {
-            return await db.Rooms.FirstOrDefaultAsync(x => x.CinemaId == cinemaId &&
+            return await this.db.Rooms.FirstOrDefaultAsync(x => x.CinemaId == cinemaId &&
                                                x.Number == number);
+        }
+
+        public async Task<IRoom> GetById(int roomId)
+        {
+            return await this.db.Rooms
+                .FirstOrDefaultAsync(c => c.Id == roomId);
         }
     }
 }

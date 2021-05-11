@@ -9,5 +9,7 @@
         Task<int> Create(IRoomCreation room);
 
         Task<IRoom> GetByCinemaAndNumber(int cinemaId, int number);
+
+        Task<IRoom> GetById(int roomId);
     }
 }

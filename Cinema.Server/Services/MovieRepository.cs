@@ -29,9 +29,15 @@
             Movie newMovie = new Movie(movie.Name, movie.DurationMinutes);
 
             db.Movies.Add(newMovie);
-            await db.SaveChangesAsync();
+            await this.db.SaveChangesAsync();
 
             return newMovie.Id;
+        }
+
+        public async Task<IMovie> GetById(int movieId)
+        {
+            return await this.db.Movies
+                .FirstOrDefaultAsync(m => m.Id == movieId);
         }
     }
 }
