@@ -1,14 +1,15 @@
 ﻿namespace Cinema.Server.Infrastructure
 {
-    using Cinema.Server.Services.Contracts;
-    using Domain.CinemaDomain.NewCinema;
-    using Domain.CinemaDomain.NewMovie;
-    using Domain.CinemaDomain.NewProjection;
-    using Domain.CinemaDomainContracts;
-    using Domain.CinemaDomain.NewRoom;
-    using Cinema.Server.Services;
-    using Data.Models;
     using Data;
+    using Data.Models;
+    using Services.Contracts;
+    using Cinema.Server.Services;
+    using Domain.CinemaDomain.NewRoom;
+    using Domain.CinemaDomainContracts;
+    using Domain.CinemaDomain.NewMovie;
+    using Domain.CinemaDomain.NewCinema;
+    using Domain.CinemaDomain.NewTicket;
+    using Domain.CinemaDomain.NewProjection;
 
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.Extensions.DependencyInjection;
@@ -78,6 +79,7 @@
             services.AddTransient<IMovieRepository, MovieRepository>();
             services.AddTransient<IProjectionRepository, ProjectionRepository>();
             services.AddTransient<ISeatRepository, SeatRepository>();
+            services.AddTransient<ITicketRepository, TicketRepository>();
 
             services.AddTransient<INewCinema, NewCinemaCreation>();
             services.Decorate<INewCinema, NewCinemaUniqueValidation>();
@@ -96,6 +98,12 @@
             services.Decorate<INewProjection, NewProjectionUniqueValidation>();
             services.Decorate<INewProjection, NewProjectionPreviousOverlapValidation>();
             services.Decorate<INewProjection, NewProjectionNextOverlapValidation>();
+
+            services.AddTransient<INewTicket, NewTicketCreation>();
+            services.Decorate<INewTicket, NewTicketIsNotBoughtOrBookedValidation>();
+            services.Decorate<INewTicket, NewTicketSeatValidation>();
+            services.Decorate<INewTicket, NewTicketRoomValidation>();
+            services.Decorate<INewTicket, NewTicketProjectionValidation>();
 
             return services;
         }

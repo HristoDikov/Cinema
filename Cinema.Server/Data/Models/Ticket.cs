@@ -1,10 +1,18 @@
 ﻿namespace Cinema.Server.Data.Models
 {
     using ModelsContracts;
+
     using System;
 
-    public class Ticket : ITicket
+    public class Ticket : ITicket, ITIcketCreation
     {
+        public Ticket(int projectionId,  short rowNumber, short colNumber)
+        {
+            this.ProjectionId = projectionId;
+            this.RowNumber = rowNumber;
+            this.ColNumber = colNumber;
+        }
+
         public Ticket(DateTime projectionStartTime, string movieName, string cinema, int roomNumber, short rowNumber, short colNumber)
         {
             this.ProjectionStartTime = projectionStartTime;
@@ -12,7 +20,7 @@
             this.Cinema = cinema;
             this.RoomNumber = roomNumber;
             this.RowNumber = rowNumber;
-            this.ColNumber = ColNumber;
+            this.ColNumber = colNumber;
         }
 
         public int Id { get; set; }
@@ -33,6 +41,10 @@
         
         public int SeatId { get; set; }
         
-        public Seat Seat { get; set; }   
+        public Seat Seat { get; set; }
+
+        public int ProjectionId { get; set; }
+
+        public Projection Projection { get; set; }
     }
 }

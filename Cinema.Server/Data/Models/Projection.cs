@@ -2,9 +2,9 @@
 {
     using ModelsContracts;
 
-    using System.ComponentModel.DataAnnotations;
-    using System.Collections.Generic;
     using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     public class Projection : IProjection, IProjectionCreation
     {
@@ -15,6 +15,7 @@
             this.StartTime = startTime;
 
             this.Seats = new HashSet<Seat>();
+            this.Tickets = new HashSet<Ticket>();
         }
 
         public int Id { get; set; }
@@ -33,5 +34,7 @@
         public int AvailableSeats { get; set; }
 
         public ICollection<Seat> Seats { get; set; }
+
+        public ICollection<Ticket> Tickets { get; set; }
     }
 }

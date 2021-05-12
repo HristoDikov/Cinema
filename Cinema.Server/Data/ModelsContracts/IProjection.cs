@@ -1,6 +1,7 @@
 ﻿namespace Cinema.Server.Data.ModelsContracts
 {
     using Models;
+
     using System;
 
     public interface IProjection : IEntity

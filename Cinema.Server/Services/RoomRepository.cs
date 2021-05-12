@@ -1,9 +1,11 @@
 ﻿namespace Cinema.Server.Services
 {
     using Data;
+    using Data.Dtos;
     using Contracts;
     using Data.ModelsContracts;
 
+    using System.Linq;
     using System.Threading.Tasks;
     using Cinema.Server.Data.Models;
     using Microsoft.EntityFrameworkCore;
@@ -29,14 +31,22 @@
 
         public async Task<IRoom> GetByCinemaAndNumber(int cinemaId, int number)
         {
-            return await this.db.Rooms.FirstOrDefaultAsync(x => x.CinemaId == cinemaId &&
+            return await this.db.Rooms
+                .FirstOrDefaultAsync(x => x.CinemaId == cinemaId &&
                                                x.Number == number);
         }
 
-        public async Task<IRoom> GetById(int roomId)
+        public async Task<RoomDto> GetById(int roomId)
         {
             return await this.db.Rooms
-                .FirstOrDefaultAsync(c => c.Id == roomId);
+                .Where(r => r.Id == roomId)
+                .Select(r => new RoomDto
+                {
+                    Id = r.Id,
+                    Number = r.Number,
+                    CinemaId = r.CinemaId
+                })
+                .FirstOrDefaultAsync();
         }
     }
 }

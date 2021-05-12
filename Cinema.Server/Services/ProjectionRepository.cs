@@ -1,15 +1,16 @@
 ﻿namespace Cinema.Server.Services
 {
     using Data;
+    using Data.Dtos;
     using Contracts;
     using Data.ModelsContracts;
 
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using Cinema.Server.Data.Models;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class ProjectionRepository : IProjectionRepository
     {
@@ -45,6 +46,26 @@
             return await this.db.Projections
                 .Where(p => p.RoomId == roomId && p.StartTime > now)
                 .ToListAsync();
+        }
+
+        public async Task<ProjectionDto> GetById(int projectionId)
+        {
+            return await this.db.Projections.Where(p => p.Id == projectionId)
+                .Select(p => new ProjectionDto
+                {
+                    ProjectionId = p.Id,
+                    StartTime = p.StartTime.ToString(),
+                    RoomId = p.RoomId,
+                })
+              .FirstOrDefaultAsync();
+        }
+
+        public async Task<string> GetProjectionMovieName(int projectionId)
+        {
+            return await this.db.Projections
+                .Where(p => p.Id == projectionId)
+                .Select(p => p.Movie.Name)
+                .FirstOrDefaultAsync();
         }
     }
 }

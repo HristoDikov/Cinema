@@ -1,5 +1,6 @@
 ﻿namespace Cinema.Server.Services.Contracts
 {
+    using Data.Dtos;
     using Data.ModelsContracts;
 
     using System.Threading.Tasks;
@@ -10,6 +11,6 @@
 
         Task<IRoom> GetByCinemaAndNumber(int cinemaId, int number);
 
-        Task<IRoom> GetById(int roomId);
+        Task<RoomDto> GetById(int roomId);
     }
 }

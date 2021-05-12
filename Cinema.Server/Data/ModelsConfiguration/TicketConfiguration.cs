@@ -36,8 +36,7 @@
                 .IsRequired();
 
             builder
-                .Property(t => t.UniqueKeyOfReservations)
-                .IsRequired();
+                .Property(t => t.UniqueKeyOfReservations);
 
             builder
               .HasOne(t => t.Seat)

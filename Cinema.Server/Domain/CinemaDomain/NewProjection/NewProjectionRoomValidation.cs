@@ -1,5 +1,6 @@
 ﻿namespace Cinema.Server.Domain.CinemaDomain.NewProjection
 {
+    using Data.Dtos;
     using Services.Contracts;
     using Data.ModelsContracts;
     using CinemaDomainContracts;
@@ -20,7 +21,7 @@
 
         public async Task<NewProjectionSummary> New(IProjectionCreation proj)
         {
-            IRoom room = await roomRepo.GetById(proj.RoomId);
+            RoomDto room = await roomRepo.GetById(proj.RoomId);
 
             if (room == null)
             {

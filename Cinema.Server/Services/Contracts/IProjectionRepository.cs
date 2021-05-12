@@ -1,5 +1,6 @@
 ﻿namespace Cinema.Server.Services.Contracts
 {
+    using Data.Dtos;
     using Data.ModelsContracts;
 
     using System;
@@ -12,6 +13,11 @@
 
         Task<IProjection> Get(int movieId, int roomId, DateTime startTime);
 
+        Task<ProjectionDto> GetById(int projectionId);
+
         Task<IEnumerable<IProjection>> GetActiveProjections(int roomId);
+
+        Task<string> GetProjectionMovieName(int projectionId);
+
     }
 }

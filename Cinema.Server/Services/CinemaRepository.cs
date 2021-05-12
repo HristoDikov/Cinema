@@ -23,7 +23,7 @@
 
             db.Cinemas.Add(newCinema);
 
-           await db.SaveChangesAsync();
+            await db.SaveChangesAsync();
 
             return newCinema.Id;
         }
@@ -37,9 +37,15 @@
 
         public async Task<ICinema> GetByNameAndAddress(string name, string address)
         {
-            return await db.Cinemas.Where(x => x.Name == name &&
-                                         x.Address == address)
+            return await db.Cinemas
+                             .Where(c => c.Name == name && c.Address == address)
                              .FirstOrDefaultAsync();
+        }
+        public async Task<string> GetCinemaName(int cinemaId)
+        {
+            return await db.Cinemas
+                             .Where(c => c.Id == cinemaId)
+                             .Select(c => c.Name).FirstOrDefaultAsync();
         }
 
     }

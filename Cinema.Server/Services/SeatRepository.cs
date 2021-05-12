@@ -1,6 +1,7 @@
 ﻿namespace Cinema.Server.Services
 {
     using Data;
+    using Data.Dtos;
     using Contracts;
     using Data.Models;
     using Data.ModelsContracts;
@@ -8,6 +9,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Collections.Generic;
+    using Microsoft.EntityFrameworkCore;
 
     public class SeatRepository : ISeatRepository
     {
@@ -41,6 +43,43 @@
             }
 
             await this.db.SaveChangesAsync();
+        }
+
+        public async Task<SeatDto> GetSeatByProjIdRowAndCol(int projId, short row, short col)
+        {
+            return await this.db.Seats
+                .Where(s => s.ProjectionId == projId && s.RowNum == row && s.ColNum == col)
+                .Select(s => new SeatDto
+                {
+                    Id = s.Id,
+                    IsBooked = s.Booked,
+                    IsBought = s.Bought
+                })
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> CheckIfSeatIsBooked(int projId, short row, short col) 
+        {
+            SeatDto seat = await this.GetSeatByProjIdRowAndCol(projId, row, col);
+
+            if (seat.IsBooked)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> CheckIfSeatIsBought(int projId, short row, short col)
+        {
+            SeatDto seat = await this.GetSeatByProjIdRowAndCol(projId, row, col);
+
+            if (seat.IsBought)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
