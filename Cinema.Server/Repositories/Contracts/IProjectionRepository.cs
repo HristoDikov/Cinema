@@ -16,5 +16,7 @@
         Task<ProjectionDto> GetById(int projectionId);
 
         Task<IEnumerable<IProjection>> GetActiveProjections(int roomId);
+
+        Task<bool> CheckIfProjectionHasNotStarted(int projectionId);
     }
 }

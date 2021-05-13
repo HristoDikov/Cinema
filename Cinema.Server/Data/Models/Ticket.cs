@@ -13,7 +13,7 @@
             this.ColNumber = colNumber;
         }
 
-        public Ticket(DateTime projectionStartTime, string movieName, string cinema, int roomNumber, short rowNumber, short colNumber)
+        public Ticket(DateTime projectionStartTime, string movieName, string cinema, int roomNumber, short rowNumber, short colNumber, int seatId)
         {
             this.ProjectionStartTime = projectionStartTime;
             this.MovieName = movieName;
@@ -21,7 +21,21 @@
             this.RoomNumber = roomNumber;
             this.RowNumber = rowNumber;
             this.ColNumber = colNumber;
+            this.SeatId = seatId;
         }
+
+        public Ticket(Guid uniqueKeyOfReservation, DateTime projectionStartTime, string movieName, string cinema, int roomNumber, short rowNumber, short colNumber, int seatId)
+        {
+            this.UniqueKeyOfReservations = uniqueKeyOfReservation; 
+            this.ProjectionStartTime = projectionStartTime;
+            this.MovieName = movieName;
+            this.Cinema = cinema;
+            this.RoomNumber = roomNumber;
+            this.RowNumber = rowNumber;
+            this.ColNumber = colNumber;
+            this.SeatId = seatId;
+        }
+
 
         public int Id { get; set; }
 

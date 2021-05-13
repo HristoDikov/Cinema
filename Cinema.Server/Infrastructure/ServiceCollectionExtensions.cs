@@ -9,6 +9,7 @@
     using Domain.CinemaDomain.NewMovie;
     using Domain.CinemaDomain.NewCinema;
     using Domain.CinemaDomain.NewTicket;
+    using Domain.CinemaDomain.ReserveTicket;
     using Domain.CinemaDomain.NewProjection;
 
     using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -104,6 +105,13 @@
             services.Decorate<INewTicket, NewTicketSeatValidation>();
             services.Decorate<INewTicket, NewTicketRoomValidation>();
             services.Decorate<INewTicket, NewTicketProjectionValidation>();
+
+            services.AddTransient<ITicketReservation, TicketReservation>();
+            services.Decorate<ITicketReservation, TicketReservationIsNotBoughtOrBookedValdiation>();
+            services.Decorate<ITicketReservation, TicketReservationProjectionHasNotStartedValidation>();
+            services.Decorate<ITicketReservation, TicketReservationSeatValidation>();
+            services.Decorate<ITicketReservation, TicketReservationRoomValidation>();
+            services.Decorate<ITicketReservation, TicketReservationProjectionValidation>();
 
             return services;
         }

@@ -3,14 +3,14 @@
     using Data;
     using Data.Dtos;
     using Contracts;
+    using Data.Models;
     using Data.ModelsContracts;
 
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Cinema.Server.Data.Models;
-    using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
+    using Microsoft.EntityFrameworkCore;
 
     public class ProjectionRepository : IProjectionRepository
     {
@@ -56,8 +56,21 @@
                     ProjectionId = p.Id,
                     StartTime = p.StartTime.ToString(),
                     RoomId = p.RoomId,
+                    MovieId = p.MovieId,
                 })
               .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> CheckIfProjectionHasNotStarted(int projectionId)
+        {
+            ProjectionDto proj = await this.GetById(projectionId);
+
+            if (DateTime.Parse(proj.StartTime) < DateTime.Now || (DateTime.Parse(proj.StartTime) - DateTime.Now).TotalMinutes < 10)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
