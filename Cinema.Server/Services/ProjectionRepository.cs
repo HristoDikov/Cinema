@@ -59,13 +59,5 @@
                 })
               .FirstOrDefaultAsync();
         }
-
-        public async Task<string> GetProjectionMovieName(int projectionId)
-        {
-            return await this.db.Projections
-                .Where(p => p.Id == projectionId)
-                .Select(p => p.Movie.Name)
-                .FirstOrDefaultAsync();
-        }
     }
 }

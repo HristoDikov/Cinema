@@ -7,5 +7,7 @@
         public string StartTime{ get; set; }
 
         public int RoomId { get; set; }
+
+        public int MovieId { get; set; }
     }
 }

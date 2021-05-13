@@ -1,6 +1,6 @@
 ﻿namespace Cinema.Server.Services.Contracts
 {
-    using Cinema.Server.Data.ModelsContracts;
+    using Data.ModelsContracts;
 
     using System.Threading.Tasks;
 
@@ -11,5 +11,7 @@
         Task<IMovie> GetByNameAndDuration(string name, short duration);
 
         Task<IMovie> GetById(int movieId);
+
+        Task<string> GetMovieName(int movieId);
     }
 }

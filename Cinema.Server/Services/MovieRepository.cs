@@ -1,7 +1,6 @@
 ﻿namespace Cinema.Server.Services
 {
     using Data;
-    using Data.Dtos;
     using Contracts;
     using Data.Models;
     using Data.ModelsContracts;
@@ -42,13 +41,10 @@
                 .FirstOrDefaultAsync(m => m.Id == movieId);
         }
 
-        public async Task<MovieWithNameDto> GetMovieName(int movieId)
+        public async Task<string> GetMovieName(int movieId)
         {
             return await this.db.Movies.Where(m => m.Id == movieId)
-                .Select(m => new MovieWithNameDto
-                {
-                    Name = m.Name,
-                })
+                .Select(m => m.Name)
                 .FirstOrDefaultAsync();
         }
     }

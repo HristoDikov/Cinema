@@ -16,8 +16,5 @@
         Task<ProjectionDto> GetById(int projectionId);
 
         Task<IEnumerable<IProjection>> GetActiveProjections(int roomId);
-
-        Task<string> GetProjectionMovieName(int projectionId);
-
     }
 }
