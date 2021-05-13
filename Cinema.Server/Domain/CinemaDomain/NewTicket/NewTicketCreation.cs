@@ -1,7 +1,7 @@
 ﻿namespace Cinema.Server.Domain.CinemaDomain.NewTicket
 {
     using Data.Dtos;
-    using Services.Contracts;
+    using Repositories.Contracts;
     using Models.OutputModels;
     using Data.ModelsContracts;
     using CinemaDomainContracts;

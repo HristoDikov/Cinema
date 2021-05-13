@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
     using Data.ModelsContracts;
     using CinemaDomainContracts;
-    using Services.Contracts;
+    using Repositories.Contracts;
     using Data.Models;
 
     public class NewCinemaCreation : INewCinema

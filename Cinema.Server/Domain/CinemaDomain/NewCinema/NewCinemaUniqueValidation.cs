@@ -3,7 +3,7 @@
     using CinemaDomainContracts.Models;
     using Data.ModelsContracts;
     using CinemaDomainContracts;
-    using Services.Contracts;
+    using Repositories.Contracts;
 
     using System.Threading.Tasks;
 

@@ -1,11 +1,11 @@
 ﻿namespace Cinema.Server.Domain.CinemaDomain.NewRoom
 {
     using Data.ModelsContracts;
-    using CinemaDomainContracts.Models;
     using CinemaDomainContracts;
     using System.Threading.Tasks;
-    using Cinema.Server.Services.Contracts;
     using Cinema.Server.Data.Models;
+    using CinemaDomainContracts.Models;
+    using Cinema.Server.Repositories.Contracts;
 
     public class NewRoomCreation : INewRoom
     {

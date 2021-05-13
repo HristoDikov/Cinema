@@ -6,19 +6,19 @@
     using Microsoft.AspNetCore.Identity;
     using System.Threading.Tasks;
     using Microsoft.Extensions.Options;
-    using Services.Contracts;
+    using Repositories.Contracts;
     using Microsoft.AspNetCore.Http;
 
     public class IdentityController : ApiController
     {
         private readonly UserManager<User> userManager;
-        private readonly IIdentityService identityService;
+        private readonly IIdentityRepository identityService;
         private readonly ApplicationSettings appSettings;
 
         public IdentityController(
             UserManager<User> userManager,
             IOptions<ApplicationSettings> appSettings, 
-            IIdentityService identityService)
+            IIdentityRepository identityService)
         {
             this.userManager = userManager;
             this.identityService = identityService;

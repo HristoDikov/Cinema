@@ -1,4 +1,4 @@
-﻿namespace Cinema.Server.Services.Contracts
+﻿namespace Cinema.Server.Repositories.Contracts
 {
     using Data.ModelsContracts;
 

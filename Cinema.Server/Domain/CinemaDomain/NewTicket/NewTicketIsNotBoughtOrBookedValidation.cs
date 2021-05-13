@@ -1,8 +1,8 @@
 ﻿namespace Cinema.Server.Domain.CinemaDomain.NewTicket
 {
     using Data.ModelsContracts;
-    using Services.Contracts;
     using CinemaDomainContracts;
+    using Repositories.Contracts;
     using CinemaDomainContracts.Models;
 
     using System.Threading.Tasks;

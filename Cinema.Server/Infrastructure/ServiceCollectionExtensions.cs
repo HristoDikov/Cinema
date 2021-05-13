@@ -2,8 +2,8 @@
 {
     using Data;
     using Data.Models;
-    using Services.Contracts;
-    using Cinema.Server.Services;
+    using Repositories;
+    using Repositories.Contracts;
     using Domain.CinemaDomain.NewRoom;
     using Domain.CinemaDomainContracts;
     using Domain.CinemaDomain.NewMovie;
@@ -73,7 +73,7 @@
         }
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddTransient<IIdentityService, IdentityService>();
+            services.AddTransient<IIdentityRepository, IdentityRepository>();
             services.AddTransient<ICinemaRepository, CinemaRepository>();
             services.AddTransient<IRoomRepository, RoomRepository>();
             services.AddTransient<IMovieRepository, MovieRepository>();

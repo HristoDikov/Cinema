@@ -3,7 +3,7 @@
     using Domain.CinemaDomainContracts.Models;
     using Domain.CinemaDomainContracts;
     using Cinema.Server.Models;
-    using Services.Contracts;
+    using Repositories.Contracts;
     using Data.Models;
 
     using Microsoft.AspNetCore.Mvc;

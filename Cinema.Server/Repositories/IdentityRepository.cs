@@ -1,4 +1,4 @@
-﻿namespace Cinema.Server.Services
+﻿namespace Cinema.Server.Repositories
 {
     using Contracts;
     using Microsoft.IdentityModel.Tokens;
@@ -7,7 +7,7 @@
     using System.Security.Claims;
     using System.Text;
 
-    public class IdentityService : IIdentityService
+    public class IdentityRepository : IIdentityRepository
     {
         public string GenerateJwtToker(string userId, string userName, string secret)
         {

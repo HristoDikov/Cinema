@@ -1,6 +1,6 @@
 ﻿namespace Cinema.Server.Domain.CinemaDomain.NewProjection
 {
-    using Services.Contracts;
+    using Repositories.Contracts;
     using Data.ModelsContracts;
     using CinemaDomainContracts;
     using Domain.CinemaDomainContracts.Models;

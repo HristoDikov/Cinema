@@ -1,4 +1,4 @@
-﻿namespace Cinema.Server.Services
+﻿namespace Cinema.Server.Repositories
 {
     using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;

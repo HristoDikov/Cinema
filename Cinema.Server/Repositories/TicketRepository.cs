@@ -1,4 +1,4 @@
-﻿namespace Cinema.Server.Services
+﻿namespace Cinema.Server.Repositories
 {
     using Data.Dtos;
     using Contracts;
