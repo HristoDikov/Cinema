@@ -19,6 +19,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.OpenApi.Models;
     using System.Text;
+    using Cinema.Server.Domain.CinemaDomain.BuyTicketWithReservation;
 
     public static class ServiceCollectionExtensions
     {
@@ -112,6 +113,11 @@
             services.Decorate<ITicketReservation, TicketReservationSeatValidation>();
             services.Decorate<ITicketReservation, TicketReservationRoomValidation>();
             services.Decorate<ITicketReservation, TicketReservationProjectionValidation>();
+
+            services.AddTransient<IBuyTicketWithReservation, BuyTicketWithReservationReturnBoughtTicket>();
+            services.Decorate<IBuyTicketWithReservation, BuyTicketWithReservation>();
+            services.Decorate<IBuyTicketWithReservation, BuyTicketWithReservationStartTimeValidation>();
+            services.Decorate<IBuyTicketWithReservation, BuyTicketWithReservationNotBoughtValidation>();
 
             return services;
         }

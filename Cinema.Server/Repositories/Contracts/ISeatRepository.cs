@@ -15,5 +15,6 @@
 
         Task<bool> CheckIfSeatIsBought(int projId, short row, short col);
 
+        Task SetSeatToBought(int ticketId);
     }
 }

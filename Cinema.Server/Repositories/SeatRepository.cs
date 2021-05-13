@@ -81,5 +81,15 @@
 
             return false;
         }
+
+        public async Task SetSeatToBought(int ticketId)
+        {
+            Seat seat = db.Seats.FirstOrDefault(s => s.TicketId == ticketId);
+
+            seat.Bought = true;
+            seat.Booked = false;
+
+            await db.SaveChangesAsync();
+        }
     }
 }
