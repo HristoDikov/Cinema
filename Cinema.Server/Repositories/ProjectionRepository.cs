@@ -25,6 +25,11 @@
         {
             Projection newProj = new Projection(projection.MovieId, projection.RoomId, projection.StartTime);
 
+            int count = await db.Rooms.Where(r => r.Id == newProj.RoomId).Select(r => r.Rows * r.SeatsPerRow).FirstOrDefaultAsync();
+
+            //Set the projection seats
+            newProj.AvailableSeats = count;
+
             this.db.Projections.Add(newProj);
 
             await db.SaveChangesAsync();
