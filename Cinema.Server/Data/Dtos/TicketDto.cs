@@ -1,6 +1,6 @@
-﻿namespace Cinema.Server.Models.OutputModels
+﻿namespace Cinema.Server.Data.Dtos
 {
-    public class TicketOutputModel
+    public class TicketDto
     {
         public int TicketId { get; set; }
 
@@ -16,5 +16,4 @@
 
         public short Column { get; set; }
     }
-
 }

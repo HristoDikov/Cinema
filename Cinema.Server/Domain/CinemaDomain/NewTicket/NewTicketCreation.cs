@@ -2,7 +2,6 @@
 {
     using Data.Dtos;
     using Repositories.Contracts;
-    using Models.OutputModels;
     using Data.ModelsContracts;
     using CinemaDomainContracts;
     using CinemaDomainContracts.Models;
@@ -37,7 +36,7 @@
             string movieName = await this.movieRepository.GetMovieName(proj.MovieId);
             string cinemaName = await this.cinemaRepository.GetCinemaName(room.CinemaId);
 
-            TicketOutputModel savedTicket = await this.ticketRepository.BuyTicket(proj, room, seat, movieName, cinemaName, ticket.RowNumber, ticket.ColNumber);
+            TicketDto savedTicket = await this.ticketRepository.BuyTicket(proj, room, seat, movieName, cinemaName, ticket.RowNumber, ticket.ColNumber);
 
             if (savedTicket == null)
             {

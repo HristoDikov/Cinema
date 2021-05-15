@@ -1,7 +1,7 @@
-﻿using Cinema.Server.Models.OutputModels;
-
-namespace Cinema.Server.Domain.CinemaDomainContracts.Models
+﻿namespace Cinema.Server.Domain.CinemaDomainContracts.Models
 {
+    using Data.Dtos;
+
     public class BuyTicketWithReservationSummary : NewSummary
     {
         public BuyTicketWithReservationSummary(bool isCreated, string msg) 
@@ -14,12 +14,12 @@ namespace Cinema.Server.Domain.CinemaDomainContracts.Models
         {
         }
 
-        public BuyTicketWithReservationSummary(bool isCreated, string msg, int id, TicketOutputModel ticket)
+        public BuyTicketWithReservationSummary(bool isCreated, string msg, int id, TicketDto ticket)
           : base(isCreated, msg, id)
         {
             this.Ticket = ticket;
         }
 
-        public TicketOutputModel Ticket { get; set; }
+        public TicketDto Ticket { get; set; }
     }
 }

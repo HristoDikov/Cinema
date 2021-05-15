@@ -1,6 +1,6 @@
 ﻿namespace Cinema.Server.Domain.CinemaDomain.BuyTicketWithReservation
 {
-    using Models.OutputModels;
+    using Data.Dtos;
     using CinemaDomainContracts;
     using Repositories.Contracts;
     using CinemaDomainContracts.Models;
@@ -18,7 +18,7 @@
 
         public async Task<BuyTicketWithReservationSummary> BuyWithReservation(string uniqueKey)
         {
-            TicketOutputModel ticket = await this.ticketReservation.GenerateBoughtTicket(uniqueKey);
+            TicketDto ticket = await this.ticketReservation.GenerateBoughtTicket(uniqueKey);
 
             return new BuyTicketWithReservationSummary(true, $"The reserved ticket was bought!", ticket.TicketId, ticket);
         }

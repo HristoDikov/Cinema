@@ -4,7 +4,6 @@
     using Data.Dtos;
     using Contracts;
     using Data.Models;
-    using Models.OutputModels;
 
     using System;
     using System.Linq;
@@ -20,7 +19,7 @@
             this.db = db;
         }
 
-        public async Task<TicketOutputModel> BuyTicket(ProjectionDto projDto, RoomDto roomDto, SeatDto seatDto, string movieName, string cinemaName, short rowNum, short colNum)
+        public async Task<TicketDto> BuyTicket(ProjectionDto projDto, RoomDto roomDto, SeatDto seatDto, string movieName, string cinemaName, short rowNum, short colNum)
         {
             Ticket ticket = new Ticket(DateTime.Parse(projDto.StartTime), movieName, cinemaName, roomDto.Number, rowNum, colNum, seatDto.Id);
 
@@ -36,7 +35,7 @@
             projection.AvailableSeats--;
             await db.SaveChangesAsync();
 
-            TicketOutputModel ticketOutputModel = new TicketOutputModel
+            TicketDto ticketOutputModel = new TicketDto
             {
                 TicketId = ticket.Id,
                 CinemaName = ticket.Cinema,
@@ -63,12 +62,12 @@
             return CreateTicketDto(ticket);
         }
 
-        public async Task<TicketOutputModel> GenerateBoughtTicket(string uniqueKey) 
+        public async Task<TicketDto> GenerateBoughtTicket(string uniqueKey) 
         {
             Guid guid = Guid.Parse(uniqueKey);
 
-            TicketOutputModel ticketDto = await this.db.Tickets.Where(t => t.UniqueKeyOfReservations == guid)
-              .Select(t => new TicketOutputModel
+            TicketDto ticketDto = await this.db.Tickets.Where(t => t.UniqueKeyOfReservations == guid)
+              .Select(t => new TicketDto
               {
                   TicketId = t.Id,
                   MovieName = t.MovieName,

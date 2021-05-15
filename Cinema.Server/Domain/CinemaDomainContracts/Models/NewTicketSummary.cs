@@ -1,7 +1,7 @@
-﻿using Cinema.Server.Models.OutputModels;
-
-namespace Cinema.Server.Domain.CinemaDomainContracts.Models
+﻿namespace Cinema.Server.Domain.CinemaDomainContracts.Models
 {
+    using Data.Dtos;
+
     public class NewTicketSummary : NewSummary
     {
         public NewTicketSummary(bool isCreated, string msg) 
@@ -15,12 +15,12 @@ namespace Cinema.Server.Domain.CinemaDomainContracts.Models
         {
         }
 
-        public NewTicketSummary(bool isCreated, string msg, int id, TicketOutputModel ticketOutputModel)
+        public NewTicketSummary(bool isCreated, string msg, int id, TicketDto ticket)
             : base(isCreated, msg, id)
         {
-            this.TicketOutputModel = ticketOutputModel;
+            this.Ticket = ticket;
         }
 
-        public TicketOutputModel TicketOutputModel{ get; set; }
+        public TicketDto Ticket{ get; set; }
     }
 }
