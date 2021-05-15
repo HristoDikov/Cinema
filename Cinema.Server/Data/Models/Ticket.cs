@@ -6,6 +6,11 @@
 
     public class Ticket : ITicket, ITIcketCreation
     {
+        public Ticket()
+        {
+
+        }
+
         public Ticket(int projectionId,  short rowNumber, short colNumber)
         {
             this.ProjectionId = projectionId;

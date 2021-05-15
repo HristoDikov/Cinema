@@ -119,6 +119,8 @@
             services.Decorate<IBuyTicketWithReservation, BuyTicketWithReservationStartTimeValidation>();
             services.Decorate<IBuyTicketWithReservation, BuyTicketWithReservationNotBoughtValidation>();
 
+            services.AddHostedService<BackgroundRepository>();
+
             return services;
         }
         public static IServiceCollection AddSwagger(this IServiceCollection services)
