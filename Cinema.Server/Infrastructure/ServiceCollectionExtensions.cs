@@ -101,11 +101,11 @@
             services.Decorate<INewProjection, NewProjectionPreviousOverlapValidation>();
             services.Decorate<INewProjection, NewProjectionNextOverlapValidation>();
 
-            services.AddTransient<INewTicket, NewTicketCreation>();
-            services.Decorate<INewTicket, NewTicketIsNotBoughtOrBookedValidation>();
-            services.Decorate<INewTicket, NewTicketSeatValidation>();
-            services.Decorate<INewTicket, NewTicketRoomValidation>();
-            services.Decorate<INewTicket, NewTicketProjectionValidation>();
+            services.AddTransient<IBuyTicket, BuyTicket>();
+            services.Decorate<IBuyTicket, TicketsSeatIsNotBoughtOrBookedValidation>();
+            services.Decorate<IBuyTicket, TicketsSeatValidation>();
+            services.Decorate<IBuyTicket, TicketRoomValidation>();
+            services.Decorate<IBuyTicket, TicketProjectionValidation>();
 
             services.AddTransient<ITicketReservation, TicketReservation>();
             services.Decorate<ITicketReservation, TicketReservationIsNotBoughtOrBookedValdiation>();

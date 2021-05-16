@@ -8,27 +8,27 @@
 
     using System.Threading.Tasks;
 
-    public class NewTicketProjectionValidation : INewTicket
+    public class TicketProjectionValidation : IBuyTicket
     {
         private readonly IProjectionRepository projectionRepository;
-        private readonly INewTicket newTicket;
+        private readonly IBuyTicket newTicket;
 
-        public NewTicketProjectionValidation(IProjectionRepository projectionRepository, INewTicket newTicket)
+        public TicketProjectionValidation(IProjectionRepository projectionRepository, IBuyTicket newTicket)
         {
             this.projectionRepository = projectionRepository;
             this.newTicket = newTicket;
         }
 
-        public async Task<NewTicketSummary> New(ITIcketCreation ticket)
+        public async Task<BuyTicketSummary> Buy(ITIcketCreation ticket)
         {
             ProjectionDto proj = await this.projectionRepository.GetById(ticket.ProjectionId);
 
             if (proj == null)
             {
-                return new NewTicketSummary(false, $"Projection with Id: '{ticket.ProjectionId}' does not exist!");
+                return new BuyTicketSummary(false, $"Projection with Id: '{ticket.ProjectionId}' does not exist!");
             }
 
-            return await this.newTicket.New(ticket);
+            return await this.newTicket.Buy(ticket);
         }
     }
 }

@@ -3,7 +3,6 @@
     using Cinema.Server.Data;
     using Cinema.Server.Data.Dtos;
     using Cinema.Server.Data.Models;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using System;
@@ -24,7 +23,7 @@
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            this.timer = new Timer(DoWork, null, TimeSpan.Zero,
+            this.timer = new Timer(CheckForExpiredBookedTickets, null, TimeSpan.Zero,
             TimeSpan.FromSeconds(30));
 
             return Task.CompletedTask;
@@ -37,7 +36,7 @@
             return Task.CompletedTask;
         }
 
-        private void DoWork(object state)
+        private void CheckForExpiredBookedTickets(object state)
         {
             using var scope = this.serviceScopeFactory.CreateScope();
             CinemaDbContext db = scope.ServiceProvider.GetRequiredService<CinemaDbContext>();
@@ -58,17 +57,12 @@
 
 
             foreach (var seatId in seatsIDs)
-            {
-                //The fastest way to delete an entity from db, i used it in .NET Core but here it didnt work.
-                
-                //db.SaveChanges();
-
+            {   
                 //Cancelling the reservation
                 Seat seat = db.Seats.Where(s => s.Id == seatId).FirstOrDefault();
                 seat.Booked = false;
 
                 //Removing the ticket with that reservation
-
                 Ticket ticket = db.Tickets.Where(t => t.SeatId == seatId).FirstOrDefault();
                 db.Tickets.Remove(ticket);
 
@@ -78,9 +72,6 @@
 
                 db.SaveChanges();
             }
-
-            //Waiting a minute to check if there are expired reservations.
-
         }
     }
 }

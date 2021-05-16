@@ -10,11 +10,11 @@
 
     public class TicketController : ApiController
     {
-        private readonly INewTicket newTicket;
+        private readonly IBuyTicket newTicket;
         private readonly ITicketReservation newTicketReservation;
         private readonly IBuyTicketWithReservation buyTicketWithReservation;
 
-        public TicketController(INewTicket newTicket, ITicketReservation newTicketReservation, IBuyTicketWithReservation buyTicketWithReservation)
+        public TicketController(IBuyTicket newTicket, ITicketReservation newTicketReservation, IBuyTicketWithReservation buyTicketWithReservation)
         {
             this.newTicket = newTicket;
             this.newTicketReservation = newTicketReservation;
@@ -25,7 +25,7 @@
         [Route(nameof(BuyTicket))]
         public async Task<IActionResult> BuyTicket(TicketCreationModel ticketModel) 
         {
-            NewTicketSummary summary = await this.newTicket.New(new Ticket(ticketModel.ProjectionId, ticketModel.Row, ticketModel.Col));
+            BuyTicketSummary summary = await this.newTicket.Buy(new Ticket(ticketModel.ProjectionId, ticketModel.Row, ticketModel.Col));
 
             if (summary.IsCreated)
             {

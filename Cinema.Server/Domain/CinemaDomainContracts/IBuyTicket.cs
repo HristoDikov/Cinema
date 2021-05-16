@@ -5,8 +5,8 @@
 
     using System.Threading.Tasks;
 
-    public interface INewTicket
+    public interface IBuyTicket
     {
-        Task<NewTicketSummary> New(ITIcketCreation ticket);
+        Task<BuyTicketSummary> Buy(ITIcketCreation ticket);
     }
 }

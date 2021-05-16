@@ -8,7 +8,7 @@
 
     using System.Threading.Tasks;
 
-    public class NewTicketCreation : INewTicket
+    public class BuyTicket : IBuyTicket
     {
         private readonly ITicketRepository ticketRepository;
         private readonly IProjectionRepository projectionRepository;
@@ -17,7 +17,7 @@
         private readonly ICinemaRepository cinemaRepository;
         private readonly IMovieRepository movieRepository;
 
-        public NewTicketCreation(ITicketRepository ticketRepository, IProjectionRepository projectionRepository, 
+        public BuyTicket(ITicketRepository ticketRepository, IProjectionRepository projectionRepository, 
             IRoomRepository roomRepository, ISeatRepository seatRepository,  ICinemaRepository cinemaRepository, IMovieRepository movieRepository)
         {
             this.ticketRepository = ticketRepository;
@@ -28,7 +28,7 @@
             this.movieRepository = movieRepository;
         }
 
-        public async Task<NewTicketSummary> New(ITIcketCreation ticket)
+        public async Task<BuyTicketSummary> Buy(ITIcketCreation ticket)
         {
             ProjectionDto proj = await this.projectionRepository.GetById(ticket.ProjectionId);
             RoomDto room = await this.roomRepository.GetById(proj.RoomId);
@@ -40,10 +40,10 @@
 
             if (savedTicket == null)
             {
-                return new NewTicketSummary(false, "The ticket was not bought!");
+                return new BuyTicketSummary(false, "The ticket was not bought!");
             }
 
-            return new NewTicketSummary(true, $"The ticket was bought!", savedTicket.TicketId, savedTicket);
+            return new BuyTicketSummary(true, $"The ticket was bought!", savedTicket.TicketId, savedTicket);
         }
     }
 }
