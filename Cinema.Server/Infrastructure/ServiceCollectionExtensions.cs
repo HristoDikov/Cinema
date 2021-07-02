@@ -3,14 +3,16 @@
     using Data;
     using Data.Models;
     using Repositories;
-    using Repositories.Contracts;
-    using Domain.CinemaDomain.NewRoom;
-    using Domain.CinemaDomainContracts;
-    using Domain.CinemaDomain.NewMovie;
-    using Domain.CinemaDomain.NewCinema;
-    using Domain.CinemaDomain.NewTicket;
-    using Domain.CinemaDomain.ReserveTicket;
-    using Domain.CinemaDomain.NewProjection;
+    using Services.Implementations;
+    using Services.Contracts;
+    using Domain.Contracts;
+    using Domain.Domain.NewCinema;
+    using Domain.Domain.NewRoom;
+    using Domain.Domain.NewMovie;
+    using Domain.Domain.NewProjection;
+    using Domain.Domain.BuyTicket;
+    using Domain.Domain.ReserveTicket;
+    using Domain.Domain.BuyTicketWithReservation;
 
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +21,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.OpenApi.Models;
     using System.Text;
-    using Cinema.Server.Domain.CinemaDomain.BuyTicketWithReservation;
+  
 
     public static class ServiceCollectionExtensions
     {
@@ -75,13 +77,13 @@
         }
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddTransient<IIdentityRepository, IdentityRepository>();
-            services.AddTransient<ICinemaRepository, CinemaRepository>();
-            services.AddTransient<IRoomRepository, RoomRepository>();
-            services.AddTransient<IMovieRepository, MovieRepository>();
-            services.AddTransient<IProjectionRepository, ProjectionRepository>();
-            services.AddTransient<ISeatRepository, SeatRepository>();
-            services.AddTransient<ITicketRepository, TicketRepository>();
+            services.AddTransient<IIdentityService, IdentityService>();
+            services.AddTransient<ICinemaService, CinemaService>();
+            services.AddTransient<IRoomService, RoomService>();
+            services.AddTransient<IMovieService, MovieService>();
+            services.AddTransient<IProjectionService, ProjectionService>();
+            services.AddTransient<ISeatService, SeatService>();
+            services.AddTransient<ITicketService, TicketService>();
 
             services.AddTransient<INewCinema, NewCinemaCreation>();
             services.Decorate<INewCinema, NewCinemaUniqueValidation>();
@@ -119,7 +121,7 @@
             services.Decorate<IBuyTicketWithReservation, BuyTicketWithReservationStartTimeValidation>();
             services.Decorate<IBuyTicketWithReservation, BuyTicketWithReservationNotBoughtValidation>();
 
-            services.AddHostedService<BackgroundRepository>();
+            services.AddHostedService<BackgroundService>();
 
             return services;
         }

@@ -1,11 +1,12 @@
 ﻿namespace Cinema.Server.Controllers
 {
     using Models;
-    using Domain.CinemaDomainContracts;
+    using Data.Models;
+    using Domain.Models;
+    using Domain.Contracts;
+
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
-    using Cinema.Server.Domain.CinemaDomainContracts.Models;
-    using Cinema.Server.Data.Models;
 
     public class RoomController : ApiController
     {

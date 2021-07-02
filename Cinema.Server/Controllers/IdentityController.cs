@@ -1,24 +1,25 @@
 ﻿namespace Cinema.Server.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
     using Data.Models;
+    using Services.Contracts;
+
     using Models.Identity;
-    using Microsoft.AspNetCore.Identity;
     using System.Threading.Tasks;
-    using Microsoft.Extensions.Options;
-    using Repositories.Contracts;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Options;
+    using Microsoft.AspNetCore.Identity;
 
     public class IdentityController : ApiController
     {
         private readonly UserManager<User> userManager;
-        private readonly IIdentityRepository identityService;
+        private readonly IIdentityService identityService;
         private readonly ApplicationSettings appSettings;
 
         public IdentityController(
             UserManager<User> userManager,
             IOptions<ApplicationSettings> appSettings, 
-            IIdentityRepository identityService)
+            IIdentityService identityService)
         {
             this.userManager = userManager;
             this.identityService = identityService;
@@ -31,17 +32,11 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Register(RegisterRequestModel model)
         {
-            var user = new User
-            {
-                Email = model.Email,
-                UserName = model.UserName,
-            };
-
-            var result = await this.userManager.CreateAsync(user, model.Password);
+            var result = await this.identityService.Register(model.UserName,model.Email, model.Password);
 
             if (result.Succeeded)
             {
-                return Created("/login", user.UserName);
+                return Ok();
             }
 
             return BadRequest(result.Errors);

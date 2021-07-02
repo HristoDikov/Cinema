@@ -1,5 +1,4 @@
-﻿
-namespace Cinema.Server.Models.Identity
+﻿namespace Cinema.Server.Models.Identity
 {
     using System.ComponentModel.DataAnnotations;
 

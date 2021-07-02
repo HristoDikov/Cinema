@@ -2,8 +2,8 @@
 {
     using Models;
     using Data.Models;
-    using Domain.CinemaDomainContracts;
-    using Domain.CinemaDomainContracts.Models;
+    using Domain.Models;
+    using Domain.Contracts;
 
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;

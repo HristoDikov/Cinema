@@ -1,22 +1,22 @@
 ﻿namespace Cinema.Server.Controllers
 {
-    using Domain.CinemaDomainContracts.Models;
-    using Domain.CinemaDomainContracts;
-    using Cinema.Server.Models;
-    using Repositories.Contracts;
+    using Models;
     using Data.Models;
+    using Domain.Models;
+    using Domain.Contracts;
+    using Services.Contracts;
 
-    using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
 
     public class CinemaController : ApiController
     {
-        private readonly ICinemaRepository cinemaRepository;
+        private readonly ICinemaService cinemaService;
         private readonly INewCinema newCinema;
 
-        public CinemaController(ICinemaRepository cinemaRepository, INewCinema newCinema)
+        public CinemaController(ICinemaService cinemaService, INewCinema newCinema)
         {
-            this.cinemaRepository = cinemaRepository;
+            this.cinemaService = cinemaService;
             this.newCinema = newCinema;
         }
 
