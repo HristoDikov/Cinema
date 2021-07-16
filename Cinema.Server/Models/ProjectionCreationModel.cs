@@ -1,6 +1,6 @@
 ﻿namespace Cinema.Server.Models
 {
-    using Infrastructure.Filters;
+    using Infrastructure.Attributes;
 
     using System;
     using System.ComponentModel.DataAnnotations;

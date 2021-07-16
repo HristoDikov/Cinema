@@ -1,4 +1,4 @@
-﻿namespace Cinema.Server.Infrastructure.Filters
+﻿namespace Cinema.Server.Infrastructure.Attributes
 {
     using System;
     using System.ComponentModel.DataAnnotations;
