@@ -23,16 +23,10 @@
         {
             Ticket ticket = new Ticket(DateTime.Parse(projDto.StartTime), movieName, cinemaName, roomDto.Number, rowNum, colNum, seatDto.Id);
 
+            await this.SetSeatTicketBooked(seatDto.Id, ticket);
 
-            Seat seat = await this.db.Seats.FirstOrDefaultAsync(s => s.Id == seatDto.Id);
+            await this.DecreaseProjectionAvailableSeats(projDto.ProjectionId, ticket);
 
-            db.Tickets.Add(ticket);
-            seat.Ticket = ticket;
-            seat.Bought = true;
-
-            Projection projection = this.db.Projections.FirstOrDefault(p => p.Id == projDto.ProjectionId);
-            projection.Tickets.Add(ticket);
-            projection.AvailableSeats--;
             await db.SaveChangesAsync();
 
             TicketDto ticketOutputModel = new TicketDto
