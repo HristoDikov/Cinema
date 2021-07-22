@@ -1,37 +1,16 @@
-﻿namespace Cinema.Server.Controllers
+﻿namespace Cinema.Web.Controllers
 {
-    using Models;
-    using Data.Models;
-    using Domain.Models;
-    using Domain.Contracts;
+    using Application.Features.Projection.Commands.CreateProjection;
 
-    using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
 
     public class ProjectionController : ApiController
     {
-        private readonly INewProjection newProjection;
-
-        public ProjectionController(INewProjection newProjection)
-        {
-            this.newProjection = newProjection;
-        }
-
         [HttpPost]
         [Route(nameof(Create))]
-        public async Task<IActionResult> Create(ProjectionCreationModel projection)
-        {
-            NewProjectionSummary summary = await this.newProjection.New(new Projection(projection.RoomId, projection.MovieId, projection.StartTime));
-
-            if (summary.IsCreated)
-            {
-                return Ok(summary.Message);
-            }
-            else
-            {
-                return BadRequest(summary.Message);
-            }
-        }
+        public async Task<ActionResult<CreateProjectionSummary>> Create(CreateProjectionCommand command)
+           => await this.Mediator.Send(command);
     }
 
 }

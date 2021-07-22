@@ -1,7 +1,8 @@
-namespace Cinema.Server
+namespace Cinema.Web.Controllers
 {
-    using Data;
-    using Infrastructure;
+    using Application;
+    using Infrastructure.Configurations;
+    using Infrastructure.Persistance;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
@@ -20,11 +21,10 @@ namespace Cinema.Server
         {
             services.AddDbContext<CinemaDbContext>(options => options
                 .UseSqlServer(this.Configuration.GetDefaultConnectionString()))
-                .AddIdentity()
-                .AddJwtAuthentication(services.GetApplicationSettings(this.Configuration))
+                .AddIdentity(this.Configuration)
+                .AddApplication(this.Configuration)
                 .AddApplicationServices()
-                .AddSwagger()
-                .AddControllers();
+                .AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,8 +52,8 @@ namespace Cinema.Server
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();
-                })
-                .ApplyMigrations();
+                });
+                //.ApplyMigrations();
         }
     }
 }

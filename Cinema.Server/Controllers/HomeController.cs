@@ -1,4 +1,4 @@
-﻿namespace Cinema.Server.Controllers
+﻿namespace Cinema.Web.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;

@@ -3,9 +3,5 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Cinema.Data\Cinema.Data.csproj" />
-    <ProjectReference Include="..\Cinema.Services\Cinema.Services.csproj" />
-  </ItemGroup>
+  
 </Project>

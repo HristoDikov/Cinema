@@ -1,4 +1,4 @@
-﻿namespace Cinema.Server.Models
+﻿namespace Cinema.Web.Controllers
 {
     using System.ComponentModel.DataAnnotations;
 
