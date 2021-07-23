@@ -1,6 +1,6 @@
 ﻿namespace Cinema.Application.Contracts.Services
 {
-    using Application.Seat;
+    using Features.Seat;
     using Domain.EntitiesContracts;
 
     using System.Threading.Tasks;

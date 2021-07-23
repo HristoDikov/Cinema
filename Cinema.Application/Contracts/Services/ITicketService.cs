@@ -1,6 +1,6 @@
 ﻿namespace Cinema.Application.Contracts.Services
-{         
-    using Seat;
+{
+    using Features.Seat;
     using Features.Ticket.Commands.Common;
     using Features.Room.Commands.CreateRoom;
     using Features.Ticket.Commands.BuyTicket;

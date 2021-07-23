@@ -4,11 +4,11 @@
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using Microsoft.EntityFrameworkCore;
-    using Cinema.Infrastructure.Persistance;
-    using Cinema.Application.Contracts.Services;
-    using Cinema.Domain.EntitiesContracts;
-    using Cinema.Domain.Entities;
-    using Cinema.Application.Seat;
+    using Infrastructure.Persistance;
+    using Application.Contracts.Services;
+    using Domain.EntitiesContracts;
+    using Domain.Entities;
+    using Application.Features.Seat;
 
     public class SeatService : ISeatService
     {

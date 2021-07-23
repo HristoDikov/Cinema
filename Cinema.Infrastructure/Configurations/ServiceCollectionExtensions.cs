@@ -29,7 +29,6 @@
     using FluentValidation.AspNetCore;
     using Microsoft.OpenApi.Models;
 
-
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
@@ -125,7 +124,7 @@
             services.Decorate<IBuyTicketWithReservation, BuyTicketWithReservationStartTimeValidation>();
             services.Decorate<IBuyTicketWithReservation, BuyTicketWithReservationNotBoughtValidation>();
 
-            //services.AddHostedService<BackgroundService>();
+            services.AddHostedService<BackgroundService>();
 
             return services;
         }

@@ -1,9 +1,8 @@
 ﻿namespace Cinema.Infrastructure.Implementations
 {
-
     using Persistance;
     using Domain.Entities;
-    using Application.Seat;
+    using Application.Features.Seat;
     using Application.Contracts.Services;
     using Application.Features.Ticket.Commands.Common;
     using Application.Features.Room.Commands.CreateRoom;

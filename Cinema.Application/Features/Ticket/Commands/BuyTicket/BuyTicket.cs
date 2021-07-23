@@ -1,7 +1,6 @@
 ﻿namespace Cinema.Application.Features.Ticket.Commands.BuyTicket.Validators
 {
-
-    using Seat;
+    using Features.Seat;
     using Contracts.Services;
     using Domain.EntitiesContracts;
     using Room.Commands.CreateRoom;

@@ -1,4 +1,4 @@
-﻿namespace Cinema.Application.Seat
+﻿namespace Cinema.Application.Features.Seat
 {
     public class SeatOutputModel
     {
