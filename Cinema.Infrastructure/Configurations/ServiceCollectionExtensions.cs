@@ -1,14 +1,14 @@
 ﻿namespace Cinema.Infrastructure.Configurations
 {
     using Application;
+    using Persistance;
+    using Implementations;
+    using Persistance.Models;
     using Application.Contracts.Services;
     using Application.Features.Cinema.Commands.CreateCinema;
     using Application.Features.Projection.Commands.CreateProjection;
     using Application.Features.Cinema.Commands.CreateCinema.Validations;
     using Application.Features.Projection.Commands.CreateProjection.Validations;
-    using Persistance;
-    using Implementations;
-    using Persistance.Models;
 
     using System.Text;
     using Microsoft.IdentityModel.Tokens;
@@ -18,6 +18,8 @@
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using FluentValidation.AspNetCore;
     using Microsoft.OpenApi.Models;
+    using Cinema.Application.Features.Movie.Commands.CreateMovie;
+    using Cinema.Application.Features.Movie.Commands.CreateMovie.Validators;
 
     public static class ServiceCollectionExtensions
     {
@@ -75,15 +77,14 @@
             
             services.AddTransient<ICreateCinema, CreateCinema>();
             services.Decorate<ICreateCinema, CreateCinemaUniqueValidation>();
-            //services.AddTransient<IRequestHandler<CreateCinemaCommand, CreateCinemaSummary>, CreateCinemaCommandHandler>();
 
 
             //services.AddTransient<INewRoom, NewRoomCreation>();
             //services.Decorate<INewRoom, NewRoomUniqueValidation>();
             //services.Decorate<INewRoom, NewRoomCinemaValidation>();
 
-            //services.AddTransient<INewMovie, NewMovieCreation>();
-            //services.Decorate<INewMovie, NewMovieUniqueValidation>();
+            services.AddTransient<ICreateMovie, CreateMovie>();
+            services.Decorate<ICreateMovie, CreateMovieUniqueValidation>();
 
             services.AddTransient<ICreateProjection, CreateProjectionSeatCreation>();
             services.Decorate<ICreateProjection, CreateProjection>();

@@ -5,12 +5,12 @@
 
     using System.Threading.Tasks;
 
-    public class NewMovieUniqueValidation : ICreateMovie
+    public class CreateMovieUniqueValidation : ICreateMovie
     {
         private readonly IMovieService movieService;
         private readonly ICreateMovie newMovie;
 
-        public NewMovieUniqueValidation(IMovieService movieService, ICreateMovie newMovie)
+        public CreateMovieUniqueValidation(IMovieService movieService, ICreateMovie newMovie)
         {
             this.movieService = movieService;
             this.newMovie = newMovie;
