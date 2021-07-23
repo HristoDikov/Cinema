@@ -16,7 +16,9 @@
     using Application.Features.Ticket.Commands.BuyTicket.Validators;
     using Application.Features.Ticket.Commands.ReserveTicket.Validators;
     using Application.Features.Cinema.Commands.CreateCinema.Validations;
+    using Application.Features.Ticket.Commands.BuyTicketWithReservation;
     using Application.Features.Projection.Commands.CreateProjection.Validations;
+    using Application.Features.Ticket.Commands.BuyTicketWithReservation.Validators;
 
     using System.Text;
     using Microsoft.IdentityModel.Tokens;
@@ -26,6 +28,7 @@
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using FluentValidation.AspNetCore;
     using Microsoft.OpenApi.Models;
+
 
     public static class ServiceCollectionExtensions
     {
@@ -117,10 +120,10 @@
             services.Decorate<ITicketReservation, TicketReservationRoomValidation>();
             services.Decorate<ITicketReservation, TicketReservationProjectionValidation>();
 
-            //services.AddTransient<IBuyTicketWithReservation, BuyTicketWithReservationReturnBoughtTicket>();
-            //services.Decorate<IBuyTicketWithReservation, BuyTicketWithReservation>();
-            //services.Decorate<IBuyTicketWithReservation, BuyTicketWithReservationStartTimeValidation>();
-            //services.Decorate<IBuyTicketWithReservation, BuyTicketWithReservationNotBoughtValidation>();
+            services.AddTransient<IBuyTicketWithReservation, BuyTicketWithReservationReturnBoughtTicket>();
+            services.Decorate<IBuyTicketWithReservation, BuyTicketWithReservation>();
+            services.Decorate<IBuyTicketWithReservation, BuyTicketWithReservationStartTimeValidation>();
+            services.Decorate<IBuyTicketWithReservation, BuyTicketWithReservationNotBoughtValidation>();
 
             //services.AddHostedService<BackgroundService>();
 
