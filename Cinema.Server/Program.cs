@@ -1,4 +1,4 @@
-namespace Cinema.Server
+namespace Cinema.Web.Controllers
 {
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Hosting;

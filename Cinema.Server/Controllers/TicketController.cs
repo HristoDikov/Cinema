@@ -1,73 +1,29 @@
-﻿namespace Cinema.Server.Controllers
+﻿namespace Cinema.Web.Controllers
 {
-    using Models;
-    using Data.Models;
-    using Domain.Models;
-    using Domain.Contracts;
+    using Application.Features.Ticket.Commands.BuyTicket;
+    using Application.Features.Ticket.Commands.ReserveTicket;
+    using Application.Features.Ticket.Commands.BuyTicketWithReservation;
 
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
 
     public class TicketController : ApiController
     {
-        private readonly IBuyTicket newTicket;
-        private readonly ITicketReservation newTicketReservation;
-        private readonly IBuyTicketWithReservation buyTicketWithReservation;
-
-        public TicketController(IBuyTicket newTicket, ITicketReservation newTicketReservation, IBuyTicketWithReservation buyTicketWithReservation)
-        {
-            this.newTicket = newTicket;
-            this.newTicketReservation = newTicketReservation;
-            this.buyTicketWithReservation = buyTicketWithReservation;
-        }
 
         [HttpPost]
         [Route(nameof(BuyTicket))]
-        public async Task<IActionResult> BuyTicket(TicketCreationModel ticketModel) 
-        {
-            BuyTicketSummary summary = await this.newTicket.Buy(new Ticket(ticketModel.ProjectionId, ticketModel.Row, ticketModel.Col));
-
-            if (summary.IsCreated)
-            {
-                return Ok(summary);
-            }
-            else
-            {
-                return BadRequest(summary.Message);
-            }
-        }
+        public async Task<ActionResult<BuyTicketSummary>> BuyTicket(BuyTicketCommand command)
+        => await this.Mediator.Send(command);
 
 
         [HttpPost]
         [Route(nameof(ReserveTicket))]
-        public async Task<IActionResult> ReserveTicket(TicketCreationModel ticketModel)
-        {
-            TicketReservationSummary summary = await this.newTicketReservation.Reserve(new Ticket(ticketModel.ProjectionId, ticketModel.Row, ticketModel.Col));
-
-            if (summary.IsCreated)
-            {
-                return Ok(summary);
-            }
-            else
-            {
-                return BadRequest(summary.Message);
-            }
-        }
+        public async Task<ActionResult<TicketReservationSummary>> ReserveTicket(ReserveTicketCommand command)
+        => await this.Mediator.Send(command);
 
         [HttpPost]
         [Route(nameof(BuyTicketWithReservation))]
-        public async Task<IActionResult> BuyTicketWithReservation(string uniqueKey)
-        {
-            BuyTicketWithReservationSummary summary = await this.buyTicketWithReservation.BuyWithReservation(uniqueKey);
-
-            if (summary.IsCreated)
-            {
-                return Ok(summary);
-            }
-            else
-            {
-                return BadRequest(summary.Message);
-            }
-        }
+        public async Task<ActionResult<BuyTicketWithReservationSummary>> BuyTicketWithReservation(BuyTicketWithReservationCommand command)
+        => await this.Mediator.Send(command);
     }
 }
