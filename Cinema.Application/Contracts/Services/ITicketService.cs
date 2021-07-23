@@ -4,6 +4,7 @@
     using Features.Ticket.Commands.Common;
     using Features.Room.Commands.CreateRoom;
     using Features.Ticket.Commands.BuyTicket;
+    using Features.Ticket.Commands.ReserveTicket;
     using Features.Projection.Commands.CreateProjection;
 
     using System.Threading.Tasks;
@@ -12,7 +13,7 @@
     {
         Task<BoughtTicketOutputModel> BuyTicket(ProjectionOutputModel proj, RoomOutputModel room, SeatOutputModel seat, string movieName, string cinemaName, short rowNum, short seatNum);
 
-        //Task<TicketReservationDto> ReserveTicket(ProjectionOutputModel projDto, RoomOutputModel roomDto, SeatOutputModel seatDto, string movieName, string cinemaName, short rowNum, short colNum);
+        Task<ReservedTicketOutputModel> ReserveTicket(ProjectionOutputModel projDto, RoomOutputModel roomDto, SeatOutputModel seatDto, string movieName, string cinemaName, short rowNum, short colNum);
 
         Task<BoughtTicketOutputModel> GenerateBoughtTicket(string uniqueKey);
 

@@ -1,9 +1,10 @@
 ﻿namespace Cinema.Web.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
-    using Cinema.Application.Features.Ticket.Commands.BuyTicket;
+    using Application.Features.Ticket.Commands.BuyTicket;
+    using Application.Features.Ticket.Commands.ReserveTicket;
 
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
 
     public class TicketController : ApiController
     {
@@ -14,21 +15,10 @@
         => await this.Mediator.Send(command);
 
 
-        //[HttpPost]
-        //[Route(nameof(ReserveTicket))]
-        //public async Task<IActionResult> ReserveTicket(TicketCreationModel ticketModel)
-        //{
-        //    TicketReservationSummary summary = await this.newTicketReservation.Reserve(new Ticket(ticketModel.ProjectionId, ticketModel.Row, ticketModel.Col));
-
-        //    if (summary.IsCreated)
-        //    {
-        //        return Ok(summary);
-        //    }
-        //    else
-        //    {
-        //        return BadRequest(summary.Message);
-        //    }
-        //}
+        [HttpPost]
+        [Route(nameof(ReserveTicket))]
+        public async Task<ActionResult<ReservedTicketOutputModel>> ReserveTicket(ReserveTicketCommand command)
+        => await this.Mediator.Send(command);
 
         //[HttpPost]
         //[Route(nameof(BuyTicketWithReservation))]

@@ -9,10 +9,12 @@
     using Application.Features.Ticket.Commands.BuyTicket;
     using Application.Features.Movie.Commands.CreateMovie;
     using Application.Features.Cinema.Commands.CreateCinema;
+    using Application.Features.Ticket.Commands.ReserveTicket;
     using Application.Features.Room.Commands.CreateRoom.Validators;
     using Application.Features.Projection.Commands.CreateProjection;
     using Application.Features.Movie.Commands.CreateMovie.Validators;
     using Application.Features.Ticket.Commands.BuyTicket.Validators;
+    using Application.Features.Ticket.Commands.ReserveTicket.Validators;
     using Application.Features.Cinema.Commands.CreateCinema.Validations;
     using Application.Features.Projection.Commands.CreateProjection.Validations;
 
@@ -108,12 +110,12 @@
             services.Decorate<IBuyTicket, TicketRoomValidation>();
             services.Decorate<IBuyTicket, TicketProjectionValidation>();
 
-            //services.AddTransient<ITicketReservation, TicketReservation>();
-            //services.Decorate<ITicketReservation, TicketReservationIsNotBoughtOrBookedValdiation>();
-            //services.Decorate<ITicketReservation, TicketReservationProjectionHasNotStartedValidation>();
-            //services.Decorate<ITicketReservation, TicketReservationSeatValidation>();
-            //services.Decorate<ITicketReservation, TicketReservationRoomValidation>();
-            //services.Decorate<ITicketReservation, TicketReservationProjectionValidation>();
+            services.AddTransient<ITicketReservation, TicketReservation>();
+            services.Decorate<ITicketReservation, TicketReservationIsNotBoughtOrBookedValdiation>();
+            services.Decorate<ITicketReservation, TicketReservationProjectionHasNotStartedValidation>();
+            services.Decorate<ITicketReservation, TicketReservationSeatValidation>();
+            services.Decorate<ITicketReservation, TicketReservationRoomValidation>();
+            services.Decorate<ITicketReservation, TicketReservationProjectionValidation>();
 
             //services.AddTransient<IBuyTicketWithReservation, BuyTicketWithReservationReturnBoughtTicket>();
             //services.Decorate<IBuyTicketWithReservation, BuyTicketWithReservation>();

@@ -8,6 +8,7 @@
     using Application.Features.Ticket.Commands.Common;
     using Application.Features.Room.Commands.CreateRoom;
     using Application.Features.Ticket.Commands.BuyTicket;
+    using Application.Features.Ticket.Commands.ReserveTicket;
     using Application.Features.Projection.Commands.CreateProjection;
 
     using System;
@@ -48,18 +49,18 @@
             return ticketOutputModel;
         }
 
-        //public async Task<TicketReservationDto> ReserveTicket(ProjectionDto projDto, RoomDto roomDto, SeatDto seatDto, string movieName, string cinemaName, short rowNum, short colNum)
-        //{
-        //    Ticket ticket = new Ticket(Guid.NewGuid(), DateTime.Parse(projDto.StartTime), movieName, cinemaName, roomDto.Number, rowNum, colNum, seatDto.Id);
+        public async Task<ReservedTicketOutputModel> ReserveTicket(ProjectionOutputModel projDto, RoomOutputModel roomDto, SeatOutputModel seatDto, string movieName, string cinemaName, short rowNum, short colNum)
+        {
+            Ticket ticket = new Ticket(Guid.NewGuid(), projDto.StartTime, movieName, cinemaName, roomDto.Number, rowNum, colNum, seatDto.Id);
 
-        //    await this.SetSeatTicketBooked(seatDto.Id, ticket);
+            await this.SetSeatTicketBooked(seatDto.Id, ticket);
 
-        //    await this.DecreaseProjectionAvailableSeats(projDto.ProjectionId, ticket);
+            await this.DecreaseProjectionAvailableSeats(projDto.ProjectionId, ticket);
 
-        //    await this.db.SaveChangesAsync();
+            await this.db.SaveChangesAsync();
 
-        //    return CreateTicketDto(ticket);
-        //}
+            return CreateTicketDto(ticket);
+        }
 
         public async Task<BoughtTicketOutputModel> GenerateBoughtTicket(string uniqueKey)
         {
@@ -131,19 +132,19 @@
         }
 
 
-        //private TicketReservationDto CreateTicketDto(Ticket ticket)
-        //{
-        //    return new TicketReservationDto
-        //    {
-        //        Id = ticket.Id,
-        //        UniqueKeyOfReservations = ticket.UniqueKeyOfReservations.ToString(),
-        //        CinemaName = ticket.Cinema,
-        //        MovieName = ticket.MovieName,
-        //        ProjectionStartDate = ticket.ProjectionStartTime.ToString("f"),
-        //        RoomNumber = ticket.RoomNumber,
-        //        Row = ticket.RowNumber,
-        //        Column = ticket.ColNumber,
-        //    };
-        //}
+        private ReservedTicketOutputModel CreateTicketDto(Ticket ticket)
+        {
+            return new ReservedTicketOutputModel
+            {
+                Id = ticket.Id,
+                UniqueKeyOfReservations = ticket.UniqueKeyOfReservations.ToString(),
+                CinemaName = ticket.Cinema,
+                MovieName = ticket.MovieName,
+                ProjectionStartDate = ticket.ProjectionStartTime.ToString("f"),
+                RoomNumber = ticket.RoomNumber,
+                Row = ticket.RowNumber,
+                Column = ticket.ColNumber,
+            };
+        }
     }
 }
