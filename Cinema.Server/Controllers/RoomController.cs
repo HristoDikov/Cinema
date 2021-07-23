@@ -1,36 +1,15 @@
-﻿//namespace Cinema.Web.Controllers
-//{
-//    using Models;
-//    using Data.Models;
-//    using Domain.Models;
-//    using Domain.Contracts;
+﻿namespace Cinema.Web.Controllers
+{
+    using Application.Features.Room.Commands.CreateRoom;
 
-//    using Microsoft.AspNetCore.Mvc;
-//    using System.Threading.Tasks;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
 
-//    public class RoomController : ApiController
-//    {
-//        private readonly INewRoom newRoom;
-
-//        public RoomController(INewRoom newRoom)
-//        {
-//            this.newRoom = newRoom;
-//        }
-
-//        [HttpPost]
-//        [Route(nameof(Create))]
-//        public async Task<IActionResult> Create(RoomCreationModel model)
-//        {
-//            NewRoomSummary summary = await newRoom.New(new Room(model.CinemaId, model.Number, model.SeatsPerRow, model.Rows));
-
-//            if (summary.IsCreated)
-//            {
-//                return Ok(summary.Message);
-//            }
-//            else
-//            {
-//                return BadRequest(summary.Message);
-//            }
-//        }
-//    }
-//}
+    public class RoomController : ApiController
+    {
+        [HttpPost]
+        [Route(nameof(Create))]
+        public async Task<ActionResult<CreateRoomSummary>> Create(CreateRoomCommand model)
+        => await this.Mediator.Send(model);
+    }
+}

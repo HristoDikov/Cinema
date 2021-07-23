@@ -5,8 +5,12 @@
     using Implementations;
     using Persistance.Models;
     using Application.Contracts.Services;
+    using Application.Features.Room.Commands.CreateRoom;
+    using Application.Features.Movie.Commands.CreateMovie;
     using Application.Features.Cinema.Commands.CreateCinema;
+    using Application.Features.Room.Commands.CreateRoom.Validators;
     using Application.Features.Projection.Commands.CreateProjection;
+    using Application.Features.Movie.Commands.CreateMovie.Validators;
     using Application.Features.Cinema.Commands.CreateCinema.Validations;
     using Application.Features.Projection.Commands.CreateProjection.Validations;
 
@@ -18,8 +22,6 @@
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using FluentValidation.AspNetCore;
     using Microsoft.OpenApi.Models;
-    using Cinema.Application.Features.Movie.Commands.CreateMovie;
-    using Cinema.Application.Features.Movie.Commands.CreateMovie.Validators;
 
     public static class ServiceCollectionExtensions
     {
@@ -79,9 +81,9 @@
             services.Decorate<ICreateCinema, CreateCinemaUniqueValidation>();
 
 
-            //services.AddTransient<INewRoom, NewRoomCreation>();
-            //services.Decorate<INewRoom, NewRoomUniqueValidation>();
-            //services.Decorate<INewRoom, NewRoomCinemaValidation>();
+            services.AddTransient<ICreateRoom, CreateRoom>();
+            services.Decorate<ICreateRoom, CreateRoomUniqueValidation>();
+            services.Decorate<ICreateRoom, CreateRoomCinemaValidation>();
 
             services.AddTransient<ICreateMovie, CreateMovie>();
             services.Decorate<ICreateMovie, CreateMovieUniqueValidation>();
