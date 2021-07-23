@@ -4,17 +4,18 @@
 
     public class CreateMovieCommandValidator : AbstractValidator<CreateMovieCommand>
     {
-        private const int minMovieNameLength = 2;
-        private const int minMovieDuration = 10;
+        private const int MinMovieNameLength = 2;
+        private const int MinMovieDuration = 10;
+
         public CreateMovieCommandValidator() 
         {
             RuleFor(m => m.Name)
-                .MinimumLength(minMovieNameLength)
+                .MinimumLength(MinMovieNameLength)
                 .NotNull();
 
             RuleFor(m => m.DurationMinutes)
                 .NotNull()
-                .Must(m => m > minMovieDuration)
+                .Must(m => m > MinMovieDuration)
                 .WithMessage("Movie duration must be atleast 10 minutes!");
         }
     }
