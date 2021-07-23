@@ -6,11 +6,13 @@
     using Persistance.Models;
     using Application.Contracts.Services;
     using Application.Features.Room.Commands.CreateRoom;
+    using Application.Features.Ticket.Commands.BuyTicket;
     using Application.Features.Movie.Commands.CreateMovie;
     using Application.Features.Cinema.Commands.CreateCinema;
     using Application.Features.Room.Commands.CreateRoom.Validators;
     using Application.Features.Projection.Commands.CreateProjection;
     using Application.Features.Movie.Commands.CreateMovie.Validators;
+    using Application.Features.Ticket.Commands.BuyTicket.Validators;
     using Application.Features.Cinema.Commands.CreateCinema.Validations;
     using Application.Features.Projection.Commands.CreateProjection.Validations;
 
@@ -74,9 +76,9 @@
             services.AddTransient<IMovieService, MovieService>();
             services.AddTransient<IProjectionService, ProjectionService>();
             services.AddTransient<ISeatService, SeatService>();
-            //services.AddTransient<ITicketService, TicketService>();
+            services.AddTransient<ITicketService, TicketService>();
 
-            
+
             services.AddTransient<ICreateCinema, CreateCinema>();
             services.Decorate<ICreateCinema, CreateCinemaUniqueValidation>();
 
@@ -98,13 +100,13 @@
 
             services.AddControllers()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateProjectionCommandValidator>());
-                
 
-            //services.AddTransient<IBuyTicket, BuyTicket>();
-            //services.Decorate<IBuyTicket, TicketsSeatIsNotBoughtOrBookedValidation>();
-            //services.Decorate<IBuyTicket, TicketsSeatValidation>();
-            //services.Decorate<IBuyTicket, TicketRoomValidation>();
-            //services.Decorate<IBuyTicket, TicketProjectionValidation>();
+
+            services.AddTransient<IBuyTicket, BuyTicket>();
+            services.Decorate<IBuyTicket, TicketsSeatIsNotBoughtOrBookedValidation>();
+            services.Decorate<IBuyTicket, TicketsSeatValidation>();
+            services.Decorate<IBuyTicket, TicketRoomValidation>();
+            services.Decorate<IBuyTicket, TicketProjectionValidation>();
 
             //services.AddTransient<ITicketReservation, TicketReservation>();
             //services.Decorate<ITicketReservation, TicketReservationIsNotBoughtOrBookedValdiation>();

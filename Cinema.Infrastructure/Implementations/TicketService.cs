@@ -1,144 +1,149 @@
-﻿//namespace Cinema.Infrastructure.Implementations
-//{
-//    using Data;
-//    using Data.Dtos;
-//    using Contracts;
-//    using Data.Models;
+﻿namespace Cinema.Infrastructure.Implementations
+{
 
-//    using System;
-//    using System.Linq;
-//    using System.Threading.Tasks;
-//    using Microsoft.EntityFrameworkCore;
+    using Persistance;
+    using Domain.Entities;
+    using Application.Seat;
+    using Application.Contracts.Services;
+    using Application.Features.Ticket.Commands.Common;
+    using Application.Features.Room.Commands.CreateRoom;
+    using Application.Features.Ticket.Commands.BuyTicket;
+    using Application.Features.Projection.Commands.CreateProjection;
 
-//    public class TicketService : ITicketService
-//    {
-//        private readonly CinemaDbContext db;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
 
-//        public TicketService(CinemaDbContext db)
-//        {
-//            this.db = db;
-//        }
+    public class TicketService : ITicketService
+    {
+        private readonly CinemaDbContext db;
 
-//        public async Task<TicketDto> BuyTicket(ProjectionDto projDto, RoomDto roomDto, SeatDto seatDto, string movieName, string cinemaName, short rowNum, short colNum)
-//        {
-//            Ticket ticket = new Ticket(DateTime.Parse(projDto.StartTime), movieName, cinemaName, roomDto.Number, rowNum, colNum, seatDto.Id);
+        public TicketService(CinemaDbContext db)
+        {
+            this.db = db;
+        }
 
-//            await this.SetSeatTicketBooked(seatDto.Id, ticket);
+        public async Task<BoughtTicketOutputModel> BuyTicket(ProjectionOutputModel projOutputModel, RoomOutputModel roomOutputModel, SeatOutputModel seatOutputModel, string movieName, string cinemaName, short rowNum, short colNum)
+        {
+            Ticket ticket = new Ticket(projOutputModel.StartTime, movieName, cinemaName, roomOutputModel.Number, rowNum, colNum, seatOutputModel.Id);
 
-//            await this.DecreaseProjectionAvailableSeats(projDto.ProjectionId, ticket);
+            await this.SetSeatTicketBooked(seatOutputModel.Id, ticket);
 
-//            await db.SaveChangesAsync();
+            await this.DecreaseProjectionAvailableSeats(projOutputModel.ProjectionId, ticket);
 
-//            TicketDto ticketOutputModel = new TicketDto
-//            {
-//                TicketId = ticket.Id,
-//                CinemaName = ticket.Cinema,
-//                MovieName = ticket.MovieName,
-//                ProjectionStartDate = ticket.ProjectionStartTime.ToString("f"),
-//                RoomNumber = ticket.RoomNumber,
-//                Row = ticket.RowNumber,
-//                Column = ticket.ColNumber,
-//            };
+            await db.SaveChangesAsync();
 
-//            return ticketOutputModel;
-//        }
+            BoughtTicketOutputModel ticketOutputModel = new BoughtTicketOutputModel
+            {
+                TicketId = ticket.Id,
+                CinemaName = ticket.Cinema,
+                MovieName = ticket.MovieName,
+                ProjectionStartDate = ticket.ProjectionStartTime.ToString("f"),
+                RoomNumber = ticket.RoomNumber,
+                Row = ticket.RowNumber,
+                Column = ticket.ColNumber,
+            };
 
-//        public async Task<TicketReservationDto> ReserveTicket(ProjectionDto projDto, RoomDto roomDto, SeatDto seatDto, string movieName, string cinemaName, short rowNum, short colNum)
-//        {
-//            Ticket ticket = new Ticket(Guid.NewGuid(), DateTime.Parse(projDto.StartTime), movieName, cinemaName, roomDto.Number, rowNum, colNum, seatDto.Id);
+            return ticketOutputModel;
+        }
 
-//            await this.SetSeatTicketBooked(seatDto.Id, ticket);
+        //public async Task<TicketReservationDto> ReserveTicket(ProjectionDto projDto, RoomDto roomDto, SeatDto seatDto, string movieName, string cinemaName, short rowNum, short colNum)
+        //{
+        //    Ticket ticket = new Ticket(Guid.NewGuid(), DateTime.Parse(projDto.StartTime), movieName, cinemaName, roomDto.Number, rowNum, colNum, seatDto.Id);
 
-//            await this.DecreaseProjectionAvailableSeats(projDto.ProjectionId, ticket);
+        //    await this.SetSeatTicketBooked(seatDto.Id, ticket);
 
-//            await this.db.SaveChangesAsync();
+        //    await this.DecreaseProjectionAvailableSeats(projDto.ProjectionId, ticket);
 
-//            return CreateTicketDto(ticket);
-//        }
+        //    await this.db.SaveChangesAsync();
 
-//        public async Task<TicketDto> GenerateBoughtTicket(string uniqueKey) 
-//        {
-//            Guid guid = Guid.Parse(uniqueKey);
+        //    return CreateTicketDto(ticket);
+        //}
 
-//            TicketDto ticketDto = await this.db.Tickets.Where(t => t.UniqueKeyOfReservations == guid)
-//              .Select(t => new TicketDto
-//              {
-//                  TicketId = t.Id,
-//                  MovieName = t.MovieName,
-//                  CinemaName = t.Cinema,
-//                  ProjectionStartDate = t.ProjectionStartTime.ToString(),
-//                  RoomNumber = t.RoomNumber,
-//                  Row = t.RowNumber,
-//                  Column = t.ColNumber,
-//              })
-//              .FirstOrDefaultAsync();
+        public async Task<BoughtTicketOutputModel> GenerateBoughtTicket(string uniqueKey)
+        {
+            Guid guid = Guid.Parse(uniqueKey);
 
-//            return ticketDto;
-//        }
+            BoughtTicketOutputModel ticketDto = await this.db.Tickets.Where(t => t.UniqueKeyOfReservations == guid)
+              .Select(t => new BoughtTicketOutputModel
+              {
+                  TicketId = t.Id,
+                  MovieName = t.MovieName,
+                  CinemaName = t.Cinema,
+                  ProjectionStartDate = t.ProjectionStartTime.ToString(),
+                  RoomNumber = t.RoomNumber,
+                  Row = t.RowNumber,
+                  Column = t.ColNumber,
+              })
+              .FirstOrDefaultAsync();
 
-//        public async Task<int> GetTicketProjectionId(string uniqueKey) 
-//        {
-//            Guid guid = Guid.Parse(uniqueKey);
+            return ticketDto;
+        }
 
-//            return await this.db.Tickets
-//                .Where(t => t.UniqueKeyOfReservations == guid)
-//                .Select(t => t.ProjectionId)
-//                .FirstOrDefaultAsync();
-//        }
+        public async Task<int> GetTicketProjectionId(string uniqueKey)
+        {
+            Guid guid = Guid.Parse(uniqueKey);
 
-//        public async Task<TicketProjIdRowAndColDto> GetTicketIdRowAndCol(string uniqueKey)
-//        {
-//            Guid guid = Guid.Parse(uniqueKey);
+            return await this.db.Tickets
+                .Where(t => t.UniqueKeyOfReservations == guid)
+                .Select(t => t.ProjectionId)
+                .FirstOrDefaultAsync();
+        }
 
-//            return await this.db.Tickets
-//                .Where(t => t.UniqueKeyOfReservations == guid)
-//                .Select(t => new TicketProjIdRowAndColDto 
-//                {
-//                ProjId = t.ProjectionId,
-//                Row = t.RowNumber,
-//                Col = t.ColNumber,
-//                })
-//                .FirstOrDefaultAsync();
-//        }
+        public async Task<TicketProjIdRowAndColOutputModel> GetTicketIdRowAndCol(string uniqueKey)
+        {
+            Guid guid = Guid.Parse(uniqueKey);
 
-//        public async Task<int> GetTicketId(string uniqueKey)
-//        {
-//            Guid guid = Guid.Parse(uniqueKey);
+            return await this.db.Tickets
+                .Where(t => t.UniqueKeyOfReservations == guid)
+                .Select(t => new TicketProjIdRowAndColOutputModel
+                {
+                    ProjId = t.ProjectionId,
+                    Row = t.RowNumber,
+                    Col = t.ColNumber,
+                })
+                .FirstOrDefaultAsync();
+        }
 
-//            return await this.db.Tickets
-//                .Where(t => t.UniqueKeyOfReservations == guid)
-//                .Select(t => t.Id)
-//                .FirstOrDefaultAsync();
-//        }
+        public async Task<int> GetTicketId(string uniqueKey)
+        {
+            Guid guid = Guid.Parse(uniqueKey);
 
-//        private async Task SetSeatTicketBooked(int seatId, Ticket ticket)
-//        {
-//            Seat seat = await db.Seats.FirstOrDefaultAsync(s => s.Id == seatId);
-//            seat.Ticket = ticket;
-//            seat.Booked = true;
-//        }
+            return await this.db.Tickets
+                .Where(t => t.UniqueKeyOfReservations == guid)
+                .Select(t => t.Id)
+                .FirstOrDefaultAsync();
+        }
 
-//        private async Task DecreaseProjectionAvailableSeats(int projId, Ticket ticket) 
-//        {
-//            Projection proj = await db.Projections.FirstOrDefaultAsync(p => p.Id == projId);
-//            proj.Tickets.Add(ticket);
-//            proj.AvailableSeats--;
-//        }
+        private async Task SetSeatTicketBooked(int seatId, Ticket ticket)
+        {
+            Seat seat = await db.Seats.FirstOrDefaultAsync(s => s.Id == seatId);
+            seat.Ticket = ticket;
+            seat.Booked = true;
+        }
+
+        private async Task DecreaseProjectionAvailableSeats(int projId, Ticket ticket)
+        {
+            Projection proj = await db.Projections.FirstOrDefaultAsync(p => p.Id == projId);
+            proj.Tickets.Add(ticket);
+            proj.AvailableSeats--;
+        }
 
 
-//        private TicketReservationDto CreateTicketDto(Ticket ticket)
-//        {
-//            return new TicketReservationDto
-//            {
-//                Id = ticket.Id,
-//                UniqueKeyOfReservations = ticket.UniqueKeyOfReservations.ToString(),
-//                CinemaName = ticket.Cinema,
-//                MovieName = ticket.MovieName,
-//                ProjectionStartDate = ticket.ProjectionStartTime.ToString("f"),
-//                RoomNumber = ticket.RoomNumber,
-//                Row = ticket.RowNumber,
-//                Column = ticket.ColNumber,
-//            };
-//        }
-//    }
-//}
+        //private TicketReservationDto CreateTicketDto(Ticket ticket)
+        //{
+        //    return new TicketReservationDto
+        //    {
+        //        Id = ticket.Id,
+        //        UniqueKeyOfReservations = ticket.UniqueKeyOfReservations.ToString(),
+        //        CinemaName = ticket.Cinema,
+        //        MovieName = ticket.MovieName,
+        //        ProjectionStartDate = ticket.ProjectionStartTime.ToString("f"),
+        //        RoomNumber = ticket.RoomNumber,
+        //        Row = ticket.RowNumber,
+        //        Column = ticket.ColNumber,
+        //    };
+        //}
+    }
+}
